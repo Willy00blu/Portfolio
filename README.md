@@ -1,4 +1,4 @@
-# Portfolio — Luca Ferretti
+# Portfolio
 
 Dark, minimal portfolio for an AI Engineer. Vanilla HTML/CSS/JS, no frameworks.
 
