@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Force scroll to top before any rendering — prevents browser scroll restoration -->
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guglielmo Rotunno — Computer Engineering Student at Politecnico di Milano. Passionate about technology and problem-solving." />
+  <meta name="author" content="Guglielmo Rotunno" />
+  <meta property="og:title" content="Guglielmo Rotunno — Computer Engineering Student" />
+  <meta property="og:description" content="Computer Engineering Student at Politecnico di Milano. Passionate about technology and problem-solving." />
+  <title>Guglielmo Rotunno — Computer Engineering Student</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/loader.css" />
+  <link rel="stylesheet" href="assets/css/orb.css" />
+
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════════ -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+
+      <a href="#hero" class="nav-logo" aria-label="Guglielmo Rotunno — home">
+        <div class="nav-logo-avatar">
+          <img src="imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png" alt="" width="36" height="36" />
+        </div>
+        <span>Guglielmo Rotunno</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="nav-menu" role="list">
+        <li>
+          <a class="nav-link" href="#hero">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Home
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#about">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            About
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#experiences">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-2V4c0-1.1-.9-2-2-2h-8C6.9 2 6 2.9 6 4v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10-2h4v2h-4V4zM20 19H4V8h16v11z"/></svg>
+            Experiences                                     
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#projects">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Projects
+          </a>
+        </li>
+        <li>
+          <a class="nav-link nav-link-uni" href="pages/University.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+            University
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#contacts">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Contacts
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ════════════════════════════════════════════════════════
+         HERO
+    ════════════════════════════════════════════════════════ -->
+    <section id="hero" aria-label="Introduction">
+
+      <div class="hero-grid-bg" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-name">Guglielmo Rotunno</span>
+
+          <p class="hero-role">
+            <strong>Student</strong> at <strong>Politecnico di Milano</strong> —
+            <span id="typing-text"></span>
+          </p>
+
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">
+              View Projects
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="#contacts" class="btn btn-outline">Get in touch</a>
+          </div>
+
+          <div class="hero-socials" aria-label="Social links">
+            <a href="https://github.com/Willy00blu" class="hero-social-btn" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/guglielmo-rotunno/" class="hero-social-btn" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="mailto:guglielmorotunno05@gmail.com" class="hero-social-btn" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <div class="scroll-line"></div>
+        Scroll
+      </div>
+
+    </section>
+
+
+    <!-- ════════════════════════════════════════════════════════
+         ABOUT
+    ════════════════════════════════════════════════════════ -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="container">
+
+        <h2 id="about-title" class="section-title reveal" style="color: var(--accent);">About me</h2>
+
+        <div class="about-wrap">
+        <div class="about-grid">
+
+          <!-- Bio column -->
+          <div class="about-bio">
+
+            <div class="reveal" data-delay="1">
+              <p>
+                I'm Guglielmo, a Computer Engineering student at
+                <strong style="color: var(--text);">Politecnico di Milano</strong>.
+                I'm drawn to the places where mathematics, computation, and physical
+                reality converge — the kind of problems that need both rigorous
+                modelling and efficient code to solve.
+              </p>
+              <p>
+                Right now I'm contributing to
+                <strong style="color: var(--text);">MARCS</strong>, a research project
+                that fuses AIS data with SAR and optical satellite imagery to detect
+                vessels that go deliberately dark at sea.
+                I also take part in the Polimi Data Scientists
+                student association as a web contributor.
+              </p>
+              <p>
+                Outside of coursework I spend a lot of time coding for fun — building
+                tools, exploring ideas, and occasionally optimising something that
+                didn't really need it —
+                <a href="#projects" style="color: var(--accent);">you can have a look in my projects section</a>.
+                I also keep a running archive of notes,
+                automations, and everything about how I organise my university life
+                — all collected in the
+                <a href="pages/University.html" style="color: var(--accent);">University hub</a>.
+              </p>
+              <p>
+                Non-tech side: music production, guitar, piano, chess,
+                and the occasional deep dive into philosophy or personal finance.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Avatar column -->
+          <div class="about-avatar-wrap reveal" data-delay="2">
+            <div class="avatar-ring" aria-hidden="true">
+              <img
+                src="imgs/foto_con_sorriso_linkedin.png"
+                alt="Guglielmo Rotunno"
+                class="avatar-img"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+        </div><!-- /about-grid -->
+        </div><!-- /about-wrap -->
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════════════════════
+         EXPERIENCES
+    ════════════════════════════════════════════════════════ -->
+    <section id="experiences" aria-labelledby="experiences-title">
+      <div class="container">
+
+        <h2 id="experiences-title" class="section-title reveal" style="color: var(--accent);">Experiences</h2>
+
+        <div class="timeline" aria-label="Experiences timeline">
+
+          <!-- ── Polimi Data Science Community ── -->
+          <article class="timeline-item reveal">
+            <div class="timeline-dot" aria-hidden="true">💻</div>
+
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-company">Polimi Data Scientists</span>
+                <time class="timeline-period" datetime="2025-10">Oct. 2025 — Present</time>
+                <span class="badge" style="margin-left:auto;font-size:0.68rem;color:var(--sage);background:rgba(74,222,128,0.07);border-color:rgba(74,222,128,0.25);">Current</span>
+              </div>
+
+              <h3 class="timeline-role">Web — Student Association</h3>
+
+              <p class="timeline-desc">
+                Occasional contributor to the official website of the Polimi Data Scientists,
+                a student community at Politecnico di Milano focused on data science and AI.
+              </p>
+
+              <div class="project-stack">
+                <span class="stack-tag">HTML</span>
+                <span class="stack-tag">CSS</span>
+                <span class="stack-tag">JavaScript</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── Data Science Summer School ── -->
+          <article class="timeline-item reveal">
+            <div class="timeline-dot" aria-hidden="true">📊</div>
+
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-company">GSOM POLIMI</span>
+                <time class="timeline-period" datetime="2025-07">Jul. 2025</time>
+                <span class="badge" style="margin-left:auto;font-size:0.68rem;">Summer School</span>
+              </div>
+
+              <h3 class="timeline-role">Data Science &amp; AI for Business</h3>
+
+              <p class="timeline-desc">
+                Intensive program on data analysis and applied AI for strategic business
+                decision-making, including lectures, workshops, and company visits.
+              </p>
+
+              <div class="project-stack">
+                <span class="stack-tag">Data Analysis</span>
+                <span class="stack-tag">Applied AI</span>
+                <span class="stack-tag">Business Strategy</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── Kaplan Dublin ── -->
+          <article class="timeline-item reveal">
+            <div class="timeline-dot" aria-hidden="true">🌍</div>
+
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-company">Kaplan International Languages — Dublin, Ireland</span>
+                <time class="timeline-period" datetime="2023-07">Jul. 2023</time>
+                <span class="badge" style="margin-left:auto;font-size:0.68rem;">Language Course</span>
+              </div>
+
+              <h3 class="timeline-role">Intensive English Program Abroad</h3>
+
+              <p class="timeline-desc">
+                Intensive summer English language program abroad (15–29 Jul. 2023).
+              </p>
+            </div>
+          </article>
+
+          <!-- ── Kaplan Cambridge ── -->
+          <article class="timeline-item reveal">
+            <div class="timeline-dot" aria-hidden="true">🌍</div>
+
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-company">Kaplan International Languages — Cambridge, UK</span>
+                <time class="timeline-period" datetime="2022-07">Jul. 2022</time>
+                <span class="badge" style="margin-left:auto;font-size:0.68rem;">Language Course</span>
+              </div>
+
+              <h3 class="timeline-role">Intensive English Program Abroad</h3>
+
+              <p class="timeline-desc">
+                Intensive summer English language program abroad (18–29 Jul. 2022).
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <!-- ════════════════════════════════════════════════════════
+         PROJECTS
+    ════════════════════════════════════════════════════════ -->
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="container">
+
+        <h2 id="projects-title" class="section-title reveal" style="color: var(--accent);">Projects</h2>
+
+        <div class="projects-grid" aria-label="Project gallery">
+
+          <!-- 1 — MARCS (featured) -->
+          <article class="project-card featured">
+            <div class="project-img-wrap">
+              <img src="imgs/proj-marcs.png" alt="MARCS" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+            </div>
+            <div class="project-body">
+              <div class="uni-teaser-badge" style="margin-bottom:var(--space-3);">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2" stroke-linecap="round"/></svg>
+                In development
+              </div>
+              <h3 class="project-title">MARCS</h3>
+              <p class="project-desc">
+                Maritime Activity Recognition &amp; Correlation System.
+                A multi-modal framework to detect "dark vessels" — ships that
+                deactivate their AIS transponders to evade tracking — through
+                AIS-gap analysis combined with SAR and optical satellite imagery fusion.
+                Built as part of the PoliMi Data Scientists research group.
+              </p>
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="Project documentation">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Docs
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2 — Monte Carlo Poker Simulator -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img src="imgs/proj-poker.png" alt="Monte Carlo Poker Simulator" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Monte Carlo Poker Simulator</h3>
+              <p class="project-desc">
+                High-performance poker equity analyzer with a C Monte Carlo engine
+                called via <code>ctypes</code>. Features a bitwise hand evaluator
+                and XorShift-128 RNG for maximum throughput, with Python as the
+                interface layer and multi-threading for parallel simulation runs.
+              </p>
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3 — Diet Optimizer -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img src="imgs/proj-diet.png" alt="Diet Optimizer" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Diet Optimizer</h3>
+              <p class="project-desc">
+                A linear programming tool that builds nutritionally balanced meal plans
+                by optimising across macro and micronutrient constraints. Input your
+                targets and available foods — it outputs a diet that actually adds up.
+              </p>
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4 — English Vocabulary Quiz -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img src="imgs/proj-vocab.png" alt="Vocab Quiz" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Vocab Quiz</h3>
+              <p class="project-desc">
+                A personal flashcard tool for drilling English vocabulary — Wordle-meets-quiz
+                style. Add words, get tested, track what you keep getting wrong.
+                Built to actually help me study for the CAE.
+              </p>
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5 — Vinted Monitor -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img src="imgs/proj-vinted.png" alt="Vinted Monitor" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Vinted Monitor</h3>
+              <p class="project-desc">
+                A scraper and real-time monitor for Vinted listings. Set filters for
+                items you're looking for and get notified the moment something matching
+                your criteria gets posted — before anyone else sees it.
+              </p>
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6 — AI Automations -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img src="imgs/proj-ai.png" alt="AI Automations" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">AI Automations</h3>
+              <p class="project-desc">
+                Two small desktop tools built around LLMs.
+                <strong style="color:var(--text);">Clipboard Corrector</strong> watches
+                your clipboard and rewrites copied text on the fly.
+                <strong style="color:var(--text);">AI Tools</strong> is a lightweight
+                launcher for common AI-assisted tasks — summarise, translate, rephrase —
+                without opening a browser.
+              </p>
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 7 — Physics Simulation -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img src="imgs/proj-physics.png" alt="Physics Simulation" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Physics Simulation</h3>
+              <p class="project-desc">
+                An interactive physics engine built from scratch — particles, forces,
+                collisions, constraints. More of an experiment in numerical integration
+                and real-time rendering than a finished product, but a fun one.
+              </p>
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════════════════════
+         CONTACTS
+    ════════════════════════════════════════════════════════ -->
+    <section id="contacts" aria-labelledby="contacts-title">
+      <div class="container">
+
+        <h2 id="contacts-title" class="section-title reveal" style="color: var(--accent);">Contacts</h2>
+
+        <div class="contacts-grid">
+          <div class="contacts-info reveal">
+            <p>Open to collaborations, research projects, and conversations
+              about technology, data, and software engineering.</p>
+          </div>
+
+          <div class="social-links reveal" data-delay="1" aria-label="Social profiles">
+
+            <a href="https://github.com/Willy00blu" class="social-link" target="_blank" rel="noopener" title="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </a>
+
+            <a href="https://www.linkedin.com/in/guglielmo-rotunno/" class="social-link" target="_blank" rel="noopener" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+
+            <a href="mailto:guglielmorotunno05@gmail.com" class="social-link" title="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+
+            <a href="https://www.instagram.com/_willy00___/" class="social-link" target="_blank" rel="noopener" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">
+        &copy; 2025 <span style="color:var(--text-muted);">Guglielmo Rotunno</span>
+      </p>
+      <p class="footer-built">
+        Built with
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" aria-hidden="true" style="display:inline;vertical-align:middle;">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        and too much coffee
+      </p>
+    </div>
+  </footer>
+
+  <!-- ── Loading screen ──────────────────────────────────────── -->
+  <div id="loader" role="status" aria-label="Loading portfolio">
+    <div class="loader-orb-wrap">
+      <div class="loader-ring"></div>
+      <div class="loader-ring"></div>
+      <div class="loader-ring"></div>
+      <div class="loader-orb">
+        <span class="loader-eye loader-eye-l"></span>
+        <span class="loader-eye loader-eye-r"></span>
+      </div>
+    </div>
+    <div class="loader-text">
+      <span class="loader-name">Guglielmo Rotunno</span>
+      <span class="loader-role">Computer Engineering Student</span>
+    </div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+    <p class="loader-status"></p>
+  </div>
+
+  <!-- ── Orb assistant ───────────────────────────────────────── -->
+  <div id="orb-wrap" aria-live="polite" aria-label="Portfolio assistant">
+    <div class="orb-bubble" id="orb-bubble" role="tooltip">
+      <button class="orb-close" id="orb-close" aria-label="Chiudi assistente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <span class="orb-section" aria-hidden="true"></span>
+      <p class="orb-text" id="orb-text"></p>
+    </div>
+    <button id="orb-hit" aria-label="Assistente portfolio — clicca per aprire o chiudere"></button>
+  </div>
+
+  <script src="assets/js/loader.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="assets/js/orb-scene.js"></script>
+  <script src="assets/js/orb.js"></script>
+
+</body>
+</html>

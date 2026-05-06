@@ -1,0 +1,238 @@
+/* ============================================================
+   animations.css — Keyframes, Fade-in, Reveal, Hover
+   ============================================================ */
+
+/* ── Global Animation Variables ── */
+:root {
+  --anim-duration:   0.6s;
+  --anim-stagger:    0.09s;
+  --anim-easing:     cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Keyframe Definitions ── */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%       { transform: translate(-50%, 7px); }
+}
+
+/* ── Reveal Classes (set by IntersectionObserver) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity   var(--anim-duration) var(--anim-easing),
+    transform var(--anim-duration) var(--anim-easing);
+  will-change: transform, opacity;
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+/* Variant: fade from left */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition:
+    opacity   var(--anim-duration) var(--anim-easing),
+    transform var(--anim-duration) var(--anim-easing);
+  will-change: transform, opacity;
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+  will-change: auto;
+}
+
+/* Variant: scale up — più soft */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.96) translateY(12px);
+  transition:
+    opacity   var(--anim-duration) var(--anim-easing),
+    transform var(--anim-duration) var(--anim-easing);
+  will-change: transform, opacity;
+}
+
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  will-change: auto;
+}
+
+/* Variant: fade from right */
+.reveal-right {
+  opacity: 0;
+  transform: translateX(24px);
+  transition:
+    opacity   var(--anim-duration) var(--anim-easing),
+    transform var(--anim-duration) var(--anim-easing);
+  will-change: transform, opacity;
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+  will-change: auto;
+}
+
+/* Stagger delay helpers — applies to all reveal variants */
+[class*="reveal"][data-delay="1"]  { transition-delay: calc(var(--anim-stagger) * 1); }
+[class*="reveal"][data-delay="2"]  { transition-delay: calc(var(--anim-stagger) * 2); }
+[class*="reveal"][data-delay="3"]  { transition-delay: calc(var(--anim-stagger) * 3); }
+[class*="reveal"][data-delay="4"]  { transition-delay: calc(var(--anim-stagger) * 4); }
+[class*="reveal"][data-delay="5"]  { transition-delay: calc(var(--anim-stagger) * 5); }
+[class*="reveal"][data-delay="6"]  { transition-delay: calc(var(--anim-stagger) * 6); }
+[class*="reveal"][data-delay="7"]  { transition-delay: calc(var(--anim-stagger) * 7); }
+[class*="reveal"][data-delay="8"]  { transition-delay: calc(var(--anim-stagger) * 8); }
+[class*="reveal"][data-delay="9"]  { transition-delay: calc(var(--anim-stagger) * 9); }
+[class*="reveal"][data-delay="10"] { transition-delay: calc(var(--anim-stagger) * 10); }
+
+/* ── Hero Entrance Animations ──────────────────────────────────────
+   Elements start hidden via `both` fill-mode.
+   body.hero-ready is added by main.js after the loader exits
+   (or immediately if there's no loader).
+   ─────────────────────────────────────────────────────────────── */
+
+/* Pre-ready state: elements hidden so they don't flash before loader exits */
+.hero-eyebrow,
+.hero-name,
+.hero-role,
+.hero-cta,
+.hero-socials,
+.hero-scroll-hint {
+  opacity: 0;
+}
+
+body.hero-ready .hero-eyebrow    { animation: fadeUp 0.65s var(--anim-easing) 0.05s both; }
+body.hero-ready .hero-name       { animation: fadeUp 0.75s var(--anim-easing) 0.15s both; }
+body.hero-ready .hero-role       { animation: fadeUp 0.65s var(--anim-easing) 0.28s both; }
+body.hero-ready .hero-cta        { animation: fadeUp 0.65s var(--anim-easing) 0.40s both; }
+body.hero-ready .hero-socials    { animation: fadeUp 0.65s var(--anim-easing) 0.52s both; }
+body.hero-ready .hero-scroll-hint { animation: fadeIn 0.8s var(--anim-easing) 0.8s both; }
+
+/* When the hero leaves the viewport, main.js adds .hidden to pause the bounce.
+   No JS currently wires this up — the CSS rule is ready for an IntersectionObserver
+   on #hero that toggles the class. opacity:0 hides it visually; paused stops the
+   animation clock so it doesn't resume mid-cycle when the class is removed. */
+.hero-scroll-hint.hidden {
+  opacity: 0;
+  animation-play-state: paused;
+}
+
+/* ── Navbar entrance ── */
+#navbar { animation: fadeIn 0.5s var(--anim-easing) 0.05s both; }
+
+/* ── Hover lift (shared utility) ── */
+.hover-lift {
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Animated underline decorativo (stile blog) ── */
+.animated-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--anim-easing);
+}
+
+.animated-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ── Badge hover ── */
+.badge {
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform 0.18s var(--anim-easing);
+}
+
+.badge:hover { transform: translateY(-1px); }
+
+/* ── Reduce motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+  }
+
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale {
+    opacity:    1    !important;
+    transform:  none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  /* Keep hero elements visible when reduced-motion is on */
+  .hero-eyebrow,
+  .hero-name,
+  .hero-role,
+  .hero-cta,
+  .hero-socials,
+  .hero-scroll-hint {
+    opacity: 1 !important;
+  }
+
+  /* Pause infinite bounce animation on scroll hint */
+  .hero-scroll-hint { animation: none !important; }
+
+  /* Stop pulse animation on eyebrow dot and education status dot */
+  .hero-eyebrow::before,
+  .edu-status::before {
+    animation: none !important;
+  }
+
+  /* Section title underline appears immediately */
+  .section-title::after { transform: translateX(-50%) scaleX(1) !important; }
+}

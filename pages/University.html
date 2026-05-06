@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guglielmo Rotunno — University hub: notes, automations, and Notion template." />
+  <meta name="author" content="Guglielmo Rotunno" />
+  <title>University Hub — Guglielmo Rotunno</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="stylesheet" href="../assets/css/university.css" />
+</head>
+
+<body>
+
+  <!-- ── Navbar ─────────────────────────────────────────────────── -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-avatar">
+          <img src="../imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png" alt="" width="36" height="36" />
+        </div>
+        <span>Guglielmo Rotunno</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="nav-menu" role="list">
+        <li><a class="nav-link" href="../index.html#hero">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          Home
+        </a></li>
+        <li><a class="nav-link" href="../index.html#about">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          About
+        </a></li>
+        <li><a class="nav-link" href="../index.html#experiences">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-2V4c0-1.1-.9-2-2-2h-8C6.9 2 6 2.9 6 4v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10-2h4v2h-4V4zM20 19H4V8h16v11z"/></svg>
+          Experiences
+        </a></li>
+        <li><a class="nav-link" href="../index.html#projects">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Projects
+        </a></li>
+        <li><a class="nav-link nav-link-uni" href="../pages/University.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+          University
+        </a></li>
+        <li><a class="nav-link" href="../index.html#contacts">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contacts
+        </a></li>
+      </ul>
+
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ── Page Hero ──────────────────────────────────────────── -->
+    <div class="uni-page-hero">
+      <div class="container">
+
+        <a href="../index.html" class="back-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to portfolio
+        </a>
+
+        <p class="section-label">Politecnico di Milano</p>
+        <h1>University Hub</h1>
+        <p>
+          A personal archive from my BSc in Computer Engineering — course notes,
+          productivity automations, and a Notion workspace template for students.
+        </p>
+
+        <!-- Stats — values filled by uni.js -->
+        <div class="uni-stats" aria-label="Hub statistics">
+          <div class="uni-stat">
+            <span class="uni-stat-num" id="stat-notes">—</span>
+            <span class="uni-stat-label">Appunti</span>
+          </div>
+          <div class="uni-stat-sep" aria-hidden="true"></div>
+          <div class="uni-stat">
+            <span class="uni-stat-num" id="stat-automations">—</span>
+            <span class="uni-stat-label">Automazioni</span>
+          </div>
+          <div class="uni-stat-sep" aria-hidden="true"></div>
+          <div class="uni-stat">
+            <span class="uni-stat-num" id="stat-templates">—</span>
+            <span class="uni-stat-label">Template</span>
+          </div>
+        </div>
+
+        <!-- Main 3-tab navigation -->
+        <div class="uni-tabs" role="tablist" aria-label="University hub sections">
+          <button class="uni-tab active" id="btn-notes" data-tab="notes" role="tab" aria-selected="true" aria-controls="tab-notes">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Appunti
+          </button>
+          <button class="uni-tab" id="btn-automations" data-tab="automations" role="tab" aria-selected="false" aria-controls="tab-automations">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Automazioni
+          </button>
+          <button class="uni-tab" id="btn-template" data-tab="template" role="tab" aria-selected="false" aria-controls="tab-template">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/><rect x="14" y="3" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/><rect x="14" y="14" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="14" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Templates
+          </button>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <!-- ── Tab Panels — content injected by uni.js ─────────────── -->
+    <div class="container">
+
+      <div class="uni-panel active" id="tab-notes"       role="tabpanel" aria-labelledby="btn-notes"></div>
+      <div class="uni-panel"        id="tab-automations" role="tabpanel" aria-labelledby="btn-automations"></div>
+      <div class="uni-panel"        id="tab-template"    role="tabpanel" aria-labelledby="btn-template"></div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">
+        &copy; 2025 <span class="footer-name">Guglielmo Rotunno</span>
+      </p>
+      <p class="footer-built">
+        <a href="../index.html" class="footer-back-link">
+          &larr; Back to portfolio
+        </a>
+      </p>
+    </div>
+  </footer>
+
+  <script defer src="../assets/js/navbar.js"></script>
+  <script defer src="../assets/js/animations.js"></script>
+  <script defer src="../assets/js/main.js"></script>
+  <script type="module" src="../assets/js/uni.js"></script>
+
+</body>
+</html>
