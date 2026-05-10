@@ -29,10 +29,32 @@
 
 /* ── Page hero ── */
 .uni-page-hero {
-  padding-top: calc(80px + var(--space-16));
-  padding-bottom: var(--space-12);
-  border-bottom: 1px solid var(--border);
+  padding-top: calc(80px + var(--space-24));
+  padding-bottom: 14rem;
+  position: relative;
+  background-color: var(--bg);
+  background-image: url('../../imgs/uni-hero.png');
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
 }
+
+.uni-page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(13,13,15,0.2) 0%,
+    rgba(13,13,15,0.6) 70%,
+    var(--bg) 100%);
+  z-index: 0;
+}
+
+.uni-page-hero .container {
+  position: relative;
+  z-index: 1;
+}
+
 .uni-page-hero h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   margin-bottom: var(--space-3);
@@ -141,6 +163,12 @@
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+
+/* ── Full-width separator between hero and panels ── */
+.uni-content-wrap {
+  border-top: 1px solid var(--border);
 }
 
 /* ── Tab panels ── */
@@ -466,6 +494,19 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
 }
+.auto-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent);
+  transition: color var(--transition), gap var(--transition);
+}
+.auto-card-link svg { width: 12px; height: 12px; }
+.auto-card-link:hover { color: #fff; gap: 7px; }
 
 /* Tool color bars */
 .bar-notion   { background: linear-gradient(90deg, #e8e8e8, #d4d4d4); }
@@ -664,6 +705,11 @@
   }
 }
 
+
+/* ── Orb intro: bubble higher above sphere (university only) ── */
+body[data-orb-intro].orb-intro #orb-wrap {
+  top: calc(50% - 230px);
+}
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {

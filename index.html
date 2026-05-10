@@ -67,9 +67,15 @@
           </a>
         </li>
         <li>
+          <a class="nav-link" href="#education">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+            Education
+          </a>
+        </li>
+        <li>
           <a class="nav-link" href="#experiences">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-2V4c0-1.1-.9-2-2-2h-8C6.9 2 6 2.9 6 4v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10-2h4v2h-4V4zM20 19H4V8h16v11z"/></svg>
-            Experiences                                     
+            Experiences
           </a>
         </li>
         <li>
@@ -166,7 +172,7 @@
                 I'm Guglielmo, a Computer Engineering student at
                 <strong style="color: var(--text);">Politecnico di Milano</strong>.
                 I'm drawn to the places where mathematics, computation, and physical
-                reality converge — the kind of problems that need both rigorous
+                reality converge, the kind of problems that need both rigorous
                 modelling and efficient code to solve.
               </p>
               <p>
@@ -178,13 +184,13 @@
                 student association as a web contributor.
               </p>
               <p>
-                Outside of coursework I spend a lot of time coding for fun — building
+                Outside of coursework I spend a lot of time coding for fun : building
                 tools, exploring ideas, and occasionally optimising something that
-                didn't really need it —
+                didn't really need it,
                 <a href="#projects" style="color: var(--accent);">you can have a look in my projects section</a>.
                 I also keep a running archive of notes,
-                automations, and everything about how I organise my university life
-                — all collected in the
+                automations, and everything about how I organise my university life,
+                 all collected in the
                 <a href="pages/University.html" style="color: var(--accent);">University hub</a>.
               </p>
               <p>
@@ -214,6 +220,61 @@
 
 
     <!-- ════════════════════════════════════════════════════════
+         EDUCATION
+    ════════════════════════════════════════════════════════ -->
+    <section id="education" aria-labelledby="edu-title">
+      <div class="container">
+
+        <h2 id="edu-title" class="section-title reveal" style="color: var(--accent);">Education</h2>
+
+        <div class="edu-card reveal">
+          <div>
+            <div class="uni-teaser-badge">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+              Academic record
+            </div>
+            <p class="edu-university">Politecnico di Milano</p>
+            <h3 class="edu-degree">BSc Computer Engineering</h3>
+            <p class="edu-period">Sep. 2024 — Jul. 2027 · Milan, Italy</p>
+            <p class="edu-thesis">
+              <strong>Relevant courses:</strong> Fondamenti di Informatica, Architettura dei Calcolatori
+              e Sistemi Operativi, Analisi Matematica 1, Algebra Lineare, Fisica,
+              Logica e Algebra, Comunicazioni e Internet, Elettrotecnica.
+            </p>
+            <a href="pages/University.html" class="btn btn-outline" style="margin-top:var(--space-6);display:inline-flex;">
+              University hub
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+          <div class="edu-logo-placeholder" aria-label="Politecnico di Milano logo">
+            <img src="imgs/edu-polimi.png" alt="Politecnico di Milano" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
+          </div>
+        </div>
+
+        <div class="edu-card reveal" style="margin-top: var(--space-8);">
+          <div>
+            <div class="uni-teaser-badge">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+              Academic record
+            </div>
+            <p class="edu-university">Liceo G. Ricci Curbastro</p>
+            <h3 class="edu-degree">Scientific High School Diploma</h3>
+            <p class="edu-period">Sep. 2019 — Jul. 2024 · Lugo, Italy</p>
+            <p class="edu-thesis">
+              <strong>Final grade</strong> 85 / 100 &nbsp;
+            </p>
+          </div>
+          <div class="edu-logo-placeholder" aria-label="Liceo Ricci Curbastro logo">
+            <img src="imgs/edu-liceo.png" alt="Liceo G. Ricci Curbastro" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;opacity:0.85;" />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
          EXPERIENCES
     ════════════════════════════════════════════════════════ -->
     <section id="experiences" aria-labelledby="experiences-title">
@@ -225,7 +286,7 @@
 
           <!-- ── Polimi Data Science Community ── -->
           <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true">💻</div>
+            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-polimi-data-scientists.jpeg" alt="Polimi Data Scientists" /></div>
 
             <div class="timeline-content">
               <div class="timeline-meta">
@@ -234,10 +295,10 @@
                 <span class="badge" style="margin-left:auto;font-size:0.68rem;color:var(--sage);background:rgba(74,222,128,0.07);border-color:rgba(74,222,128,0.25);">Current</span>
               </div>
 
-              <h3 class="timeline-role">Web — Student Association</h3>
+              <h3 class="timeline-role">Web Student Association</h3>
 
               <p class="timeline-desc">
-                Occasional contributor to the official website of the Polimi Data Scientists,
+                Contributor to the official website of the Polimi Data Scientists,
                 a student community at Politecnico di Milano focused on data science and AI.
               </p>
 
@@ -251,7 +312,7 @@
 
           <!-- ── Data Science Summer School ── -->
           <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true">📊</div>
+            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-gsmo-polimi.jpeg" alt="GSOM Polimi" /></div>
 
             <div class="timeline-content">
               <div class="timeline-meta">
@@ -277,7 +338,7 @@
 
           <!-- ── Kaplan Dublin ── -->
           <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true">🌍</div>
+            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-kaplan.jpg" alt="Kaplan International Languages" /></div>
 
             <div class="timeline-content">
               <div class="timeline-meta">
@@ -296,7 +357,7 @@
 
           <!-- ── Kaplan Cambridge ── -->
           <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true">🌍</div>
+            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-kaplan.jpg" alt="Kaplan International Languages" /></div>
 
             <div class="timeline-content">
               <div class="timeline-meta">
@@ -332,24 +393,20 @@
 
           <!-- 1 — MARCS (featured) -->
           <article class="project-card featured">
-            <div class="project-img-wrap">
+            <div class="project-img-wrap" style="position:relative;">
               <img src="imgs/proj-marcs.png" alt="MARCS" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
-            </div>
-            <div class="project-body">
-              <div class="uni-teaser-badge" style="margin-bottom:var(--space-3);">
+              <div class="uni-teaser-badge" style="position:absolute;top:var(--space-3);left:var(--space-3);color:#fff;background:rgba(0,0,0,0.55);border-color:rgba(255,255,255,0.2);backdrop-filter:blur(6px);">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2" stroke-linecap="round"/></svg>
                 In development
               </div>
+            </div>
+            <div class="project-body">
               <h3 class="project-title">MARCS</h3>
               <p class="project-desc">
-                Maritime Activity Recognition &amp; Correlation System.
-                A multi-modal framework to detect "dark vessels" — ships that
-                deactivate their AIS transponders to evade tracking — through
-                AIS-gap analysis combined with SAR and optical satellite imagery fusion.
-                Built as part of the PoliMi Data Scientists research group.
+                Maritime Activity Recognition &amp; Correlation System (MARCS). A multi-modal framework detecting "dark vessels", ships disabling AIS transponders to evade tracking, via AIS-gap analysis fused with SAR and optical satellite imagery. Developed within the PoliMi Data Scientists research group.
               </p>
               <div class="project-links">
-                <a href="#" class="project-link" aria-label="Project documentation">
+                <a href="https://drive.google.com/file/d/1iBNc3unOhOYDK8I0FbyDhoO42JVTv2Rg/view?usp=sharing" class="project-link" target="_blank" rel="noopener" aria-label="Project documentation">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   Docs
                 </a>
@@ -365,13 +422,10 @@
             <div class="project-body">
               <h3 class="project-title">Monte Carlo Poker Simulator</h3>
               <p class="project-desc">
-                High-performance poker equity analyzer with a C Monte Carlo engine
-                called via <code>ctypes</code>. Features a bitwise hand evaluator
-                and XorShift-128 RNG for maximum throughput, with Python as the
-                interface layer and multi-threading for parallel simulation runs.
+                A Python poker suite powered by a high-performance C Monte Carlo simulator. Leveraging the law of large numbers through massive random sampling, it calculates precise equity against complex ranges, accurately accounting for blockers and combo frequencies.
               </p>
               <div class="project-links">
-                <a href="#" class="project-link" aria-label="GitHub">
+                <a href="https://github.com/Willy00blu/poker-suite-pro" class="project-link" target="_blank" rel="noopener" aria-label="GitHub">
                   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                   GitHub
                 </a>
@@ -379,20 +433,22 @@
             </div>
           </article>
 
-          <!-- 3 — Diet Optimizer -->
+          <!-- 3 — Diet Maker -->
           <article class="project-card">
             <div class="project-img-wrap">
-              <img src="imgs/proj-diet.png" alt="Diet Optimizer" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+              <img src="imgs/proj-diet.png" alt="Diet Maker" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
             </div>
             <div class="project-body">
-              <h3 class="project-title">Diet Optimizer</h3>
+              <h3 class="project-title">Diet Maker</h3>
               <p class="project-desc">
-                A linear programming tool that builds nutritionally balanced meal plans
-                by optimising across macro and micronutrient constraints. Input your
-                targets and available foods — it outputs a diet that actually adds up.
+                A constraint-based meal planning engine that generates personalized weekly diet plans by solving Mixed Integer Linear Programming problems with 1900+ decision variables. Combines nutritional science, chrono-nutrition principles, and user preferences into a fully configurable MILP pipeline, built on PuLP/CBC with a Streamlit interface and a 33-scenario automated test suite.
               </p>
               <div class="project-links">
-                <a href="#" class="project-link" aria-label="GitHub">
+                <a href="https://dietmaker-gsdlqnfz4rb4dcuq4fzftx.streamlit.app/" class="btn btn-primary" target="_blank" rel="noopener" style="font-size:0.82rem;padding:0.45rem 1rem;gap:var(--space-2);display:inline-flex;align-items:center;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke-linecap="round"/></svg>
+                  Live App
+                </a>
+                <a href="https://github.com/Willy00blu/Diet_Maker" class="project-link" target="_blank" rel="noopener" aria-label="GitHub">
                   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                   GitHub
                 </a>
@@ -408,12 +464,12 @@
             <div class="project-body">
               <h3 class="project-title">Vocab Quiz</h3>
               <p class="project-desc">
-                A personal flashcard tool for drilling English vocabulary — Wordle-meets-quiz
-                style. Add words, get tested, track what you keep getting wrong.
-                Built to actually help me study for the CAE.
+                A personal desktop quiz tool for drilling English vocabulary — type the
+                translation, track what you keep getting wrong, review only your mistakes. Built
+                to actually help me prepare for the IELTS.
               </p>
               <div class="project-links">
-                <a href="#" class="project-link" aria-label="GitHub">
+                <a href="https://github.com/Willy00blu/vocaboli-inglese" target="_blank" rel="noopener" class="project-link" aria-label="GitHub">
                   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                   GitHub
                 </a>
@@ -421,20 +477,21 @@
             </div>
           </article>
 
-          <!-- 5 — Vinted Monitor -->
+          <!-- 5 — Vinted Tracker -->
           <article class="project-card">
             <div class="project-img-wrap">
-              <img src="imgs/proj-vinted.png" alt="Vinted Monitor" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
+              <img src="imgs/project-vinted-monitor.png" alt="Vinted Tracker" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
             </div>
             <div class="project-body">
-              <h3 class="project-title">Vinted Monitor</h3>
+              <h3 class="project-title">Vinted Tracker</h3>
               <p class="project-desc">
-                A scraper and real-time monitor for Vinted listings. Set filters for
-                items you're looking for and get notified the moment something matching
-                your criteria gets posted — before anyone else sees it.
+                A desktop app that automatically monitors Vinted, Europe's largest
+                second-hand marketplace, across multiple countries and sends an instant email
+                alert the moment a new listing matches your search criteria: price range,
+                keywords, and brand filters included.
               </p>
               <div class="project-links">
-                <a href="#" class="project-link" aria-label="GitHub">
+                <a href="https://github.com/Willy00blu/vinted-tracker" class="project-link" target="_blank" rel="noopener" aria-label="GitHub">
                   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                   GitHub
                 </a>
@@ -442,29 +499,6 @@
             </div>
           </article>
 
-          <!-- 6 — AI Automations -->
-          <article class="project-card">
-            <div class="project-img-wrap">
-              <img src="imgs/proj-ai.png" alt="AI Automations" loading="lazy" onerror="this.closest('.project-img-wrap').style.display='none'" />
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">AI Automations</h3>
-              <p class="project-desc">
-                Two small desktop tools built around LLMs.
-                <strong style="color:var(--text);">Clipboard Corrector</strong> watches
-                your clipboard and rewrites copied text on the fly.
-                <strong style="color:var(--text);">AI Tools</strong> is a lightweight
-                launcher for common AI-assisted tasks — summarise, translate, rephrase —
-                without opening a browser.
-              </p>
-              <div class="project-links">
-                <a href="#" class="project-link" aria-label="GitHub">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
 
           <!-- 7 — Physics Simulation -->
           <article class="project-card">
@@ -474,12 +508,12 @@
             <div class="project-body">
               <h3 class="project-title">Physics Simulation</h3>
               <p class="project-desc">
-                An interactive physics engine built from scratch — particles, forces,
-                collisions, constraints. More of an experiment in numerical integration
-                and real-time rendering than a finished product, but a fun one.
+                Four collision models, one clean interface. Elastic, inelastic, real-world
+                impacts and explosions, each with configurable mass, velocity and shape. An
+                experiment in turning physics formulas into something you can actually watch happen.
               </p>
               <div class="project-links">
-                <a href="#" class="project-link" aria-label="GitHub">
+                <a href="https://github.com/Willy00blu/Physics_simulator" target="_blank" rel="noopener" class="project-link" aria-label="GitHub">
                   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                   GitHub
                 </a>
@@ -502,8 +536,6 @@
 
         <div class="contacts-grid">
           <div class="contacts-info reveal">
-            <p>Open to collaborations, research projects, and conversations
-              about technology, data, and software engineering.</p>
           </div>
 
           <div class="social-links reveal" data-delay="1" aria-label="Social profiles">
@@ -512,7 +544,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
             </a>
 
-            <a href="https://www.linkedin.com/in/guglielmo-rotunno/" class="social-link" target="_blank" rel="noopener" title="LinkedIn">
+            <a href="https://www.linkedin.com/in/guglielmo-rotunno-b90b60311/" class="social-link" target="_blank" rel="noopener" title="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             </a>
 
@@ -539,15 +571,8 @@
   ════════════════════════════════════════════════════════ -->
   <footer>
     <div class="footer-inner">
-      <p class="footer-copy">
+      <p class="footer-copy" style="text-align:center;width:100%;">
         &copy; 2025 <span style="color:var(--text-muted);">Guglielmo Rotunno</span>
-      </p>
-      <p class="footer-built">
-        Built with
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" aria-hidden="true" style="display:inline;vertical-align:middle;">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-        and too much coffee
       </p>
     </div>
   </footer>
@@ -576,7 +601,7 @@
   <!-- ── Orb assistant ───────────────────────────────────────── -->
   <div id="orb-wrap" aria-live="polite" aria-label="Portfolio assistant">
     <div class="orb-bubble" id="orb-bubble" role="tooltip">
-      <button class="orb-close" id="orb-close" aria-label="Chiudi assistente">
+      <button class="orb-close" id="orb-close" aria-label="Close assistant">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
           <path d="M18 6L6 18M6 6l12 12"/>
         </svg>

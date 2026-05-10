@@ -1,66 +1,88 @@
-# Portfolio — Luca Ferretti
+# Portfolio — Guglielmo Rotunno
 
-Dark, minimal portfolio for an AI Engineer. Vanilla HTML/CSS/JS, no frameworks.
+Personal portfolio and University Hub. Vanilla HTML/CSS/JS — no frameworks, no build step.
+
+Live at: [willy00blu.github.io/Portfolio](https://willy00blu.github.io/Portfolio)
+
+---
 
 ## Structure
 
 ```
 portfolio/
-├── index.html                  # Entry point, all sections inline
+├── index.html               # Main portfolio (hero, about, education, experiences, projects, contacts)
+├── pages/
+│   └── University.html      # University Hub (notes, automations, templates)
 ├── assets/
 │   ├── css/
-│   │   ├── main.css            # Reset, CSS custom properties, typography, layout
-│   │   ├── components.css      # Navbar, cards, badges, buttons, form, footer
-│   │   └── animations.css      # Keyframes, reveal classes, stagger utilities
+│   │   ├── main.css         # Reset, CSS custom properties, typography, layout
+│   │   ├── components.css   # Navbar, cards, badges, buttons, timeline, education, footer
+│   │   ├── animations.css   # Keyframes, reveal classes, stagger utilities
+│   │   ├── loader.css       # Full-screen intro loader
+│   │   ├── orb.css          # Orb assistant bubble + canvas wrapper
+│   │   └── university.css   # University Hub exclusive styles
 │   ├── js/
-│   │   ├── main.js             # Custom cursor, card glow, scroll tracker, form
-│   │   ├── navbar.js           # Sticky nav, active-link highlight, mobile toggle
-│   │   └── animations.js       # IntersectionObserver reveal + stagger init
-│   └── img/
-│       └── .gitkeep
-└── README.md
+│   │   ├── loader.js        # Loader sequence, loaderComplete event
+│   │   ├── navbar.js        # Sticky nav, active-section highlight, mobile toggle
+│   │   ├── animations.js    # IntersectionObserver reveal + stagger
+│   │   ├── main.js          # Typing effect, card glow, smooth scroll
+│   │   ├── orb-scene.js     # 2D Canvas sphere renderer (no deps)
+│   │   ├── orb.js           # Orb assistant logic (GSAP + OrbScene)
+│   │   ├── uni.js           # University Hub DOM renderer + tab logic
+│   │   └── uni-data.js      # Course, automation, and template data
+└── imgs/                    # Image assets
 ```
+
+---
 
 ## Design Tokens
 
-| Token        | Value      |
-|--------------|------------|
-| Background   | `#080808`  |
-| Text         | `#e2ddd6`  |
-| Accent       | `#c8f04a`  |
-| Font display | Syne       |
-| Font mono    | DM Mono    |
-| Font body    | DM Sans    |
+| Token        | Value                        |
+|--------------|------------------------------|
+| Background   | `#0d0d0f`                    |
+| Text         | `#e8e8f0`                    |
+| Accent       | `#856de5` (purple)           |
+| Font display | Outfit                       |
+| Font body    | Inter                        |
+| Font mono    | DM Mono                      |
+
+---
 
 ## Features
 
-- Semantic HTML5 (`<section>`, `<nav>`, `<article>`, `<header>`, `<footer>`)
-- CSS custom properties for full token-driven theming
+- Semantic HTML5 with full ARIA support
+- CSS custom properties for token-driven theming
 - Mobile-first responsive layout (640 / 768 / 1024 breakpoints)
-- Custom lime dot cursor with trailing circle
+- Full-screen intro loader with smooth exit
+- Floating orb assistant (2D Canvas + GSAP) with per-section messages
+- Scroll-triggered reveal animations with `prefers-reduced-motion` support
 - Sticky navbar with active-section highlight via IntersectionObserver
-- Scroll-triggered reveal animations (fade-up, fade-left, scale-in)
-- Staggered animation for badges, timeline items, project cards
 - Mouse-glow effect on project cards
-- Contact form with simulated async submit
-- Accessible: ARIA labels, focus-visible styles, `prefers-reduced-motion` support
+- University Hub with tabbed interface: Notes, Automations, Templates
+- ES module architecture for the University Hub (`uni.js` + `uni-data.js`)
 
-## Usage
+---
 
-Open `index.html` directly in a browser — no build step required.
+## Development
 
-For development with live reload:
+No build step required. Open with a local server (ES modules need HTTP):
 
 ```bash
+# VS Code Live Server (recommended)
+# or
 npx serve .
 # or
 python3 -m http.server 8080
 ```
 
+> `file://` protocol will not work due to ES module restrictions in `uni.js`.
+
+---
+
 ## Customisation
 
-1. **Personal info** — edit name, bio, experience, and project details in `index.html`
-2. **Colors / fonts** — all tokens live in `:root` in `assets/css/main.css`
-3. **Animations** — timing and easing vars in `assets/css/animations.css`
-4. **Form endpoint** — replace the `setTimeout` stub in `assets/js/main.js` with a real fetch call
-5. **Social links** — update `href` attributes on `.social-link` elements in `index.html`
+1. **Personal info** — edit content directly in `index.html` and `pages/University.html`
+2. **Colors / fonts** — all tokens in `:root` inside `assets/css/main.css`
+3. **University data** — add courses, automations, and templates in `assets/js/uni-data.js`
+4. **Orb messages** — edit the `MESSAGES` object in `assets/js/orb.js`
+5. **Per-page orb text** — set `data-orb-intro` and `data-orb-corner` on `<body>`

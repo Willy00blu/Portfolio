@@ -26,12 +26,38 @@
     return;
   }
 
+  /* ── Page-level config via data attributes on <body> ─────── */
+  const introText  = document.body.dataset.orbIntro  || 'System ready. Scroll to initialize the tour';
+  const cornerMsg  = document.body.dataset.orbCorner || null;
+  const _defaultSection = cornerMsg ? '_corner' : 'hero';
+
+  /* Per-page intro tracking — one sessionStorage key, array of pathnames */
+  const _SHOWN_KEY   = 'orbIntroShownPages';
+  const _currentPath = window.location.pathname;
+
+  function _hasShownIntro() {
+    try { return JSON.parse(sessionStorage.getItem(_SHOWN_KEY) || '[]').includes(_currentPath); }
+    catch { return false; }
+  }
+  function _markIntroShown() {
+    try {
+      const shown = JSON.parse(sessionStorage.getItem(_SHOWN_KEY) || '[]');
+      if (!shown.includes(_currentPath)) shown.push(_currentPath);
+      sessionStorage.setItem(_SHOWN_KEY, JSON.stringify(shown));
+    } catch {}
+  }
+  function _clearShownIntros() {
+    try { sessionStorage.removeItem(_SHOWN_KEY); } catch {}
+  }
+
   /* ── Messages ─────────────────────────────────────────────── */
   const MESSAGES = {
-    _intro:    { text: 'System ready. Scroll to initialize the tour' },
+    _intro:    { text: introText },
+    _corner:   { label: null,         text: cornerMsg || '' },
     hero:      { label: null,         text: 'Welcome! I will guide you through my portfolio.Feel free to click me to toggle this view' },
     about:     { label: 'about me',   text: 'A quick look into my background, skills, and what drives me' },
-    experiences:    { label: 'experiences',   text: 'Here my extracurricular activities and collaborative initiatives' },
+    education: { label: 'education',  text: 'Left home, moved to Milan, and started Computer Engineering at Politecnico di Milano' },
+    experiences: { label: 'experiences', text: 'Here my extracurricular activities and collaborative initiatives' },
     projects:  { label: 'projects',   text: 'A collection of personal projects, late-night ideas, and everything in between' },
     contacts:  { label: 'contacts',   text: 'And finally, here is how you can reach me if you want to get in touch' },
   };
@@ -151,7 +177,7 @@
         onComplete: function () {
           orbReady = true;
           hitBtn.style.pointerEvents = '';
-          if (!userClosed) showBubble('hero');
+          if (!userClosed) showBubble(_defaultSection);
           initSectionObserver();
         },
       });
@@ -200,7 +226,7 @@
       hideBubble();
     } else {
       userClosed = false;
-      showBubble(currentSection || 'hero');
+      showBubble(currentSection || _defaultSection);
     }
   });
 
@@ -219,6 +245,8 @@
       e.stopPropagation();
       userClosed = true;
       hideBubble();
+      /* If closed during intro, complete the fly-to-corner sequence */
+      if (!orbReady) flyToCorner();
     });
   }
 
@@ -233,19 +261,28 @@
       ? navEntry.type === 'reload'
       : (performance.navigation?.type === 1);
 
-    if (!isReload && sessionStorage.getItem('orbIntroShown')) {
-      /* Navigation between pages — skip intro, place orb directly at corner */
+    /* isSubPage = true on pages with a custom orb-intro message (e.g. University) */
+    const isSubPage = !!document.body.dataset.orbIntro;
+
+    if (isReload && !isSubPage) {
+      /* Home reload — reset session and play intro from scratch */
+      _clearShownIntros();
+      _markIntroShown();
+      startIntro();
+    } else if (!isReload && !_hasShownIntro()) {
+      /* First navigation to this page this session — play intro */
+      _markIntroShown();
+      startIntro();
+    } else {
+      /* Sub-page reload OR already seen intro — go straight to corner */
       const corner = getCorner(CORNER_SCALE);
       state.x     = corner.x;
       state.y     = corner.y;
       state.scale = CORNER_SCALE;
       orbReady = true;
       hitBtn.style.pointerEvents = '';
-      if (!userClosed) showBubble('hero');
+      if (!userClosed) showBubble(_defaultSection);
       initSectionObserver();
-    } else {
-      sessionStorage.setItem('orbIntroShown', '1');
-      startIntro();
     }
   }
 

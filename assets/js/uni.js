@@ -58,7 +58,7 @@ function buildYearPanel(year, isFirst) {
     ? ''
     : year.courses.map((c, i) => buildCourseCard(c, i)).join('');
   const emptyHtml = isEmpty
-    ? `<p class="no-results" style="display:block;">Nessun corso ancora — sezione in aggiornamento.</p>`
+    ? `<p class="no-results" style="display:block;">No courses yet — section coming soon.</p>`
     : '';
   return `
     <div class="year-panel${isFirst ? ' active' : ''}" id="${year.id}" role="tabpanel">
@@ -68,7 +68,7 @@ function buildYearPanel(year, isFirst) {
       </div>
       <div class="course-grid" id="grid-${year.id}">${cardsHtml}</div>
       ${emptyHtml}
-      <p class="no-results" id="no-results-${year.id}">Nessun corso trovato.</p>
+      <p class="no-results" id="no-results-${year.id}">No courses found.</p>
     </div>`;
 }
 
@@ -81,10 +81,6 @@ function buildDegreePanel(degKey, isFirst) {
 
   return `
     <div class="degree-panel${isFirst ? ' active' : ''}" id="deg-${degKey}" role="tabpanel">
-      <div class="info-banner">
-        ${SVG_INFO}
-        <span>${deg.banner}</span>
-      </div>
       <div class="year-switcher" role="tablist" aria-label="Select year">
         ${yearTabsHtml}
       </div>
@@ -103,6 +99,13 @@ function renderNotesTab() {
   const degPanelsHtml = degKeys.map((key, i) => buildDegreePanel(key, i === 0)).join('');
 
   panel.innerHTML = `
+    <div style="margin-bottom: var(--space-8);">
+      <p class="section-label" style="margin-bottom: var(--space-3); justify-content: flex-start;">Notes</p>
+      <h2 style="font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: var(--space-3);">
+        My notes from every course
+      </h2>
+      <p style="max-width: 540px;">Personal summaries and study notes from my BSc in Computer Engineering at Politecnico di Milano.</p>
+    </div>
     <div class="degree-switcher" role="tablist" aria-label="Select degree">
       ${degTabsHtml}
     </div>
@@ -121,25 +124,26 @@ function renderAutomationsTab() {
     <div class="auto-card reveal-scale" data-title="${a.title}" style="transition-delay:${i * 0.09}s">
       <div class="auto-card-bar ${a.barClass}"></div>
       <div class="auto-card-body">
-        <div class="auto-card-icon">${a.icon}</div>
+        <div class="auto-card-icon">${a.iconImg ? `<img src="${a.iconImg}" alt="${a.iconAlt || ''}" width="36" height="36" style="object-fit:contain;">` : a.icon}</div>
         <h3 class="auto-card-title">${a.title}</h3>
         <p class="auto-card-desc">${a.desc}</p>
         <div class="auto-card-footer">
           ${a.tags.map(t => `<span class="auto-tag">${t}</span>`).join('')}
+          ${a.url ? `<a class="auto-card-link" href="${a.url}" target="_blank" rel="noopener noreferrer">${SVG_EXT}${a.urlLabel || 'Link'}</a>` : ''}
         </div>
       </div>
     </div>`).join('');
 
   panel.innerHTML = `
     <div style="margin-bottom: var(--space-8);">
-      <p class="section-label" style="margin-bottom: var(--space-3); justify-content: flex-start;">Automazioni &amp; Workflow</p>
+      <p class="section-label" style="margin-bottom: var(--space-3); justify-content: flex-start;">Automations &amp; Workflow</p>
       <h2 style="font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: var(--space-3);">
-        [Your automations headline]
+        Tools I use to work smarter
       </h2>
-      <p style="max-width: 540px;">[Describe what this section contains.]</p>
+      <p style="max-width: 540px;">Small projects and scripts that automate the repetitive parts of university life.</p>
     </div>
     <div class="auto-grid" id="auto-grid">${cardsHtml}</div>
-    <p class="no-results" id="no-results-auto">Nessuna automazione trovata.</p>`;
+    <p class="no-results" id="no-results-auto">No automations found.</p>`;
 }
 
 
@@ -171,7 +175,15 @@ function renderTemplateTab() {
     </div>`;
   }).join('');
 
-  panel.innerHTML = `<div class="auto-grid">${cardsHtml}</div>`;
+  panel.innerHTML = `
+    <div style="margin-bottom: var(--space-8);">
+      <p class="section-label" style="margin-bottom: var(--space-3); justify-content: flex-start;">Templates</p>
+      <h2 style="font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: var(--space-3);">
+        Resources I share openly
+      </h2>
+      <p style="max-width: 540px;">Notion workspaces, CV templates, and other files I built for myself and made available for anyone to use.</p>
+    </div>
+    <div class="auto-grid">${cardsHtml}</div>`;
 }
 
 

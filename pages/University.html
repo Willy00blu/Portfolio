@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Guglielmo Rotunno — University hub: notes, automations, and Notion template." />
+  <meta name="description" content="Guglielmo Rotunno University hub: notes, automations, and Notion template." />
   <meta name="author" content="Guglielmo Rotunno" />
   <title>University Hub — Guglielmo Rotunno</title>
 
@@ -20,9 +20,11 @@
   <link rel="stylesheet" href="../assets/css/components.css" />
   <link rel="stylesheet" href="../assets/css/animations.css" />
   <link rel="stylesheet" href="../assets/css/university.css" />
+  <link rel="stylesheet" href="../assets/css/orb.css" />
 </head>
 
-<body>
+<body data-orb-intro="Welcome to the University Hub. Explore my notes and discover how I organise my academic life at Polimi."
+      data-orb-corner="Notes, automations and templates from my ongoing BSc at Polimi. Have a look around.">
 
   <!-- ── Navbar ─────────────────────────────────────────────────── -->
   <nav id="navbar" role="navigation" aria-label="Main navigation">
@@ -47,6 +49,10 @@
         <li><a class="nav-link" href="../index.html#about">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
           About
+        </a></li>
+        <li><a class="nav-link" href="../index.html#education">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+          Education
         </a></li>
         <li><a class="nav-link" href="../index.html#experiences">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-2V4c0-1.1-.9-2-2-2h-8C6.9 2 6 2.9 6 4v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10-2h4v2h-4V4zM20 19H4V8h16v11z"/></svg>
@@ -81,40 +87,21 @@
           Back to portfolio
         </a>
 
-        <p class="section-label">Politecnico di Milano</p>
         <h1>University Hub</h1>
         <p>
-          A personal archive from my BSc in Computer Engineering — course notes,
+          A personal archive from my BSc in Computer Engineering : course notes,
           productivity automations, and a Notion workspace template for students.
         </p>
-
-        <!-- Stats — values filled by uni.js -->
-        <div class="uni-stats" aria-label="Hub statistics">
-          <div class="uni-stat">
-            <span class="uni-stat-num" id="stat-notes">—</span>
-            <span class="uni-stat-label">Appunti</span>
-          </div>
-          <div class="uni-stat-sep" aria-hidden="true"></div>
-          <div class="uni-stat">
-            <span class="uni-stat-num" id="stat-automations">—</span>
-            <span class="uni-stat-label">Automazioni</span>
-          </div>
-          <div class="uni-stat-sep" aria-hidden="true"></div>
-          <div class="uni-stat">
-            <span class="uni-stat-num" id="stat-templates">—</span>
-            <span class="uni-stat-label">Template</span>
-          </div>
-        </div>
 
         <!-- Main 3-tab navigation -->
         <div class="uni-tabs" role="tablist" aria-label="University hub sections">
           <button class="uni-tab active" id="btn-notes" data-tab="notes" role="tab" aria-selected="true" aria-controls="tab-notes">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Appunti
+            Notes
           </button>
           <button class="uni-tab" id="btn-automations" data-tab="automations" role="tab" aria-selected="false" aria-controls="tab-automations">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Automazioni
+            Automations
           </button>
           <button class="uni-tab" id="btn-template" data-tab="template" role="tab" aria-selected="false" aria-controls="tab-template">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/><rect x="14" y="3" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/><rect x="14" y="14" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="14" width="7" height="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -128,12 +115,14 @@
 
 
     <!-- ── Tab Panels — content injected by uni.js ─────────────── -->
-    <div class="container">
+    <div class="uni-content-wrap">
+      <div class="container">
 
-      <div class="uni-panel active" id="tab-notes"       role="tabpanel" aria-labelledby="btn-notes"></div>
-      <div class="uni-panel"        id="tab-automations" role="tabpanel" aria-labelledby="btn-automations"></div>
-      <div class="uni-panel"        id="tab-template"    role="tabpanel" aria-labelledby="btn-template"></div>
+        <div class="uni-panel active" id="tab-notes"       role="tabpanel" aria-labelledby="btn-notes"></div>
+        <div class="uni-panel"        id="tab-automations" role="tabpanel" aria-labelledby="btn-automations"></div>
+        <div class="uni-panel"        id="tab-template"    role="tabpanel" aria-labelledby="btn-template"></div>
 
+      </div>
     </div>
 
   </main>
@@ -153,9 +142,26 @@
     </div>
   </footer>
 
+  <!-- ── Orb assistant ───────────────────────────────────────── -->
+  <div id="orb-wrap" aria-live="polite" aria-label="Portfolio assistant">
+    <div class="orb-bubble" id="orb-bubble" role="tooltip">
+      <button class="orb-close" id="orb-close" aria-label="Close assistant">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <span class="orb-section" aria-hidden="true"></span>
+      <p class="orb-text" id="orb-text"></p>
+    </div>
+    <button id="orb-hit" aria-label="Portfolio assistant — click to open or close"></button>
+  </div>
+
   <script defer src="../assets/js/navbar.js"></script>
   <script defer src="../assets/js/animations.js"></script>
   <script defer src="../assets/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="../assets/js/orb-scene.js"></script>
+  <script src="../assets/js/orb.js"></script>
   <script type="module" src="../assets/js/uni.js"></script>
 
 </body>
