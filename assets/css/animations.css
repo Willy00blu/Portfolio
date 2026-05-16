@@ -124,6 +124,7 @@
 .hero-name,
 .hero-role,
 .hero-cta,
+.hero-uni-cta,
 .hero-socials,
 .hero-scroll-hint {
   opacity: 0;
@@ -133,8 +134,9 @@ body.hero-ready .hero-eyebrow    { animation: fadeUp 0.65s var(--anim-easing) 0.
 body.hero-ready .hero-name       { animation: fadeUp 0.75s var(--anim-easing) 0.15s both; }
 body.hero-ready .hero-role       { animation: fadeUp 0.65s var(--anim-easing) 0.28s both; }
 body.hero-ready .hero-cta        { animation: fadeUp 0.65s var(--anim-easing) 0.40s both; }
-body.hero-ready .hero-socials    { animation: fadeUp 0.65s var(--anim-easing) 0.52s both; }
-body.hero-ready .hero-scroll-hint { animation: fadeIn 0.8s var(--anim-easing) 0.8s both; }
+body.hero-ready .hero-uni-cta    { animation: fadeUp 0.65s var(--anim-easing) 0.50s both; }
+body.hero-ready .hero-socials    { animation: fadeUp 0.65s var(--anim-easing) 0.62s both; }
+body.hero-ready .hero-scroll-hint { animation: fadeIn 0.8s var(--anim-easing) 0.9s both; }
 
 /* When the hero leaves the viewport, main.js adds .hidden to pause the bounce.
    No JS currently wires this up — the CSS rule is ready for an IntersectionObserver
@@ -219,6 +221,7 @@ body.hero-ready .hero-scroll-hint { animation: fadeIn 0.8s var(--anim-easing) 0.
   .hero-name,
   .hero-role,
   .hero-cta,
+  .hero-uni-cta,
   .hero-socials,
   .hero-scroll-hint {
     opacity: 1 !important;

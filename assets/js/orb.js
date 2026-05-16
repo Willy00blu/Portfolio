@@ -54,7 +54,7 @@
   const MESSAGES = {
     _intro:    { text: introText },
     _corner:   { label: null,         text: cornerMsg || '' },
-    hero:      { label: null,         text: 'Welcome! I will guide you through my portfolio.Feel free to click me to toggle this view' },
+    hero:      { label: null,         text: 'Welcome! I will guide you through my portfolio. Feel free to click me to toggle this view' },
     about:     { label: 'about me',   text: 'A quick look into my background, skills, and what drives me' },
     education: { label: 'education',  text: 'Left home, moved to Milan, and started Computer Engineering at Politecnico di Milano' },
     experiences: { label: 'experiences', text: 'Here my extracurricular activities and collaborative initiatives' },

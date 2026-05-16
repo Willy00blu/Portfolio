@@ -688,6 +688,25 @@
 
 
 /* ── Responsive — narrow viewports ── */
+@media (max-width: 640px) {
+  /* width:fit-content + items wider than viewport = horizontal scroll bug */
+  .uni-tabs,
+  .degree-switcher {
+    width: 100%;
+  }
+
+  .uni-tab,
+  .deg-tab {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .uni-page-hero {
+    padding-bottom: 6rem;
+  }
+}
+
 @media (max-width: 480px) {
   .year-tab {
     font-size: 0.72rem;
@@ -702,6 +721,10 @@
   .uni-tab {
     font-size: 0.8rem;
     padding: var(--space-2) var(--space-4);
+  }
+
+  .student-os-hero {
+    padding: var(--space-8);
   }
 }
 
