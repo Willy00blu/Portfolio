@@ -12,7 +12,7 @@
 PF.module('HeroReady', function () {
   function markReady() { document.body.classList.add('hero-ready'); }
 
-  document.addEventListener('loaderComplete', markReady, { once: true });
+  PF.onLoaderComplete(markReady);
 
   /* No loader on this page (or it was skipped): start straight away */
   if (!document.getElementById('loader')) setTimeout(markReady, 150);
@@ -88,7 +88,7 @@ PF.module('Typing', function () {
     timer = setTimeout(tick, 750);
   }
 
-  document.addEventListener('loaderComplete', startTyping, { once: true });
+  PF.onLoaderComplete(startTyping);
   if (!document.getElementById('loader')) setTimeout(startTyping, 150);
   setTimeout(startTyping, 6000);   /* safety net, same as the hero */
 });

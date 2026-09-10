@@ -70,6 +70,23 @@ window.PF = (function () {
     catch (err) { console.error('[' + name + '] init failed:', err); }
   }
 
+  /* ── loaderComplete, but sticky ────────────────────────────────────
+     The intro loader can finish before a script that cares about it has
+     even executed — GSAP comes from a CDN, and on a phone it can easily
+     take longer than the (shortened) loader. A plain addEventListener
+     would then miss the event forever and the orb would only appear from
+     its fallback timer. utils.js runs first on every page, so it is the
+     one place that can reliably record that the event already fired.   */
+  let _loaderDone = false;
+  document.addEventListener('loaderComplete', function () { _loaderDone = true; }, { once: true });
+
+  function onLoaderComplete(fn) {
+    if (_loaderDone) { fn(); return; }
+    document.addEventListener('loaderComplete', fn, { once: true });
+  }
+
+  function loaderDone() { return _loaderDone; }
+
   /* ── Debounce / throttle for scroll & resize handlers ─────────────── */
   function debounce(fn, wait) {
     let t;
@@ -134,7 +151,7 @@ window.PF = (function () {
   return {
     storageGet, storageSet, storageRemove,
     isReload, reducedMotion, isTouch,
-    onReady, module, debounce, animator,
+    onReady, onLoaderComplete, loaderDone, module, debounce, animator,
   };
 
 })();

@@ -102,7 +102,8 @@ PF.module('Loader', function initLoader() {
   const EXIT_AT = reducedMotion
     ? 400
     : (isPhone ? 450 : 700) + BAR_DURATION_MS + (isPhone ? 250 : 400);
-  const TRANSITION_MS = 750; /* matches the CSS transition duration */
+  /* Must match #loader's transition-duration in loader.css (shorter on phones) */
+  const TRANSITION_MS = isPhone ? 450 : 750;
 
   at(function () {
     /* Scroll to top while the loader still covers the screen → no visible jump */

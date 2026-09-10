@@ -1194,13 +1194,13 @@
   }
 }
 
-/* NB: the 220% is deliberately clamped by the global img{max-width:100%} —
-   that pair is what frames the photo inside the ring. Do not "fix" it with
-   max-width:none: the image then really scales to 220% and the circle shows
-   nothing but the backdrop. */
+/* The photo fills the ring and is cropped by its overflow:hidden.
+   (This used to read width:220%, which only ever rendered as 100% because
+   of the global img{max-width:100%}; written out explicitly so the framing
+   no longer depends on that interaction.) */
 .avatar-img {
   position: absolute;
-  width: 220%;
+  width: 100%;
   height: auto;
   top: 1px;
   left: -1px;

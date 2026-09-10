@@ -24,6 +24,12 @@
   transform: translateY(-102%); /* 102% clips the bottom edge cleanly */
 }
 
+/* Phones get a quicker exit — the slide is 750ms of pure waiting before the
+   site is usable. Keep this in sync with TRANSITION_MS in loader.js. */
+@media (max-width: 767px) {
+  #loader { transition-duration: 0.45s; }
+}
+
 
 /* ── Orb + rings ── */
 .loader-orb-wrap {

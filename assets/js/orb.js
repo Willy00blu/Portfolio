@@ -330,12 +330,15 @@ PF.module('Orb', function initOrb() {
     }
   }
 
-  document.addEventListener('loaderComplete', _maybeStart, { once: true });
+  /* Sticky: if the loader already finished while this file was still
+     downloading (slow CDN on mobile), start right now instead of waiting
+     for an event that has already been and gone. */
+  PF.onLoaderComplete(_maybeStart);
 
-  /* Fallback: if loaderComplete never fires, start after 5 s */
-  setTimeout(_maybeStart, 5000);
+  /* Fallback: if loaderComplete never fires at all */
+  setTimeout(_maybeStart, 2500);
 
-  /* If no loader element at all, start after 600 ms */
-  if (!document.getElementById('loader')) setTimeout(_maybeStart, 600);
+  /* If no loader element at all, start after 400 ms */
+  if (!document.getElementById('loader')) setTimeout(_maybeStart, 400);
 
 });

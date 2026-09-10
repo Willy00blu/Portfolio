@@ -92,14 +92,18 @@
       }
     });
 
-    /* ── Mouse tracking for eye look-at ── */
+    /* ── Mouse tracking for eye look-at (pointer devices only) ── */
+    const isTouchDevice = PF.isTouch();
     let mouseX = W / 2;
     let mouseY = H / 2;
-    window.addEventListener('pointermove', function (e) {
-      if (e.pointerType === 'touch') return;   /* fingers don't hover */
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    }, { passive: true });
+
+    if (!isTouchDevice) {
+      window.addEventListener('pointermove', function (e) {
+        if (e.pointerType === 'touch') return;   /* fingers don't hover */
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }, { passive: true });
+    }
 
     /* ── Blink state ── */
     let blinkValue      = 0;          /* 0 = open, 1 = fully closed */
@@ -169,7 +173,10 @@
          screen size so eyes only reach max when cursor is at the screen edge */
       const MAX_ANGLE = 0.48;
       let eyeYaw = 0, eyePitch = 0;
-      if (!document.body.classList.contains('orb-intro')) {
+      /* Touch devices have no cursor to follow: without this the eyes would
+         aim at the default "pointer" position (the middle of the screen) and
+         permanently squint up-left. Straight ahead is the right look. */
+      if (!isTouchDevice && !document.body.classList.contains('orb-intro')) {
         const dxRel  = mouseX - cx / dpr;        /* cursor offset from sphere (CSS px) */
         const dyRel  = mouseY - cy / dpr;
         const dxNorm = dxRel / (W / 2);          /* normalise by half-viewport */
