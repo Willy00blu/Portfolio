@@ -174,14 +174,9 @@
   position: relative;
   overflow: hidden;
   background-color: var(--bg);
-  background-image: image-set(
-    url('../../imgs/hero-bg.webp') type('image/webp'),
-    url('../../imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png') type('image/png')
-  );
-  background-image: -webkit-image-set(
-    url('../../imgs/hero-bg.webp') 1x,
-    url('../../imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png') 2x
-  );
+  /* Plain url(), no image-set: a "2x" PNG candidate makes every retina
+     screen download the 2 MB original instead of the 97 KB WebP. */
+  background-image: url('../../imgs/hero-bg.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1199,10 +1194,13 @@
   }
 }
 
+/* NB: the 220% is deliberately clamped by the global img{max-width:100%} —
+   that pair is what frames the photo inside the ring. Do not "fix" it with
+   max-width:none: the image then really scales to 220% and the circle shows
+   nothing but the backdrop. */
 .avatar-img {
   position: absolute;
   width: 220%;
-  max-width: none;   /* the global img{max-width:100%} would undo the framing */
   height: auto;
   top: 1px;
   left: -1px;
