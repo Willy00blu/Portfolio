@@ -13,15 +13,47 @@
  */
 (function () {
 
-  const SPHERE_R   = 26;   // sphere radius in CSS pixels
-  const MARGIN_REM = 2;    // matches CSS bottom/right: 2rem
+  const SPHERE_R = 26;   // sphere radius in CSS pixels at scale 1
+  /* The sphere is drawn slightly larger than its (invisible) hit button so it
+     reads as a ball sitting under the cursor, not as a button. */
+  const SPHERE_OVERSIZE = 1.17;
 
   window.OrbScene = { init };
+
+  /* ── Where the orb rests ────────────────────────────────────────────
+     Read straight from orb.css (--orb-margin / --orb-size on #orb-wrap)
+     so the canvas sphere and the button underneath it stay locked
+     together at every breakpoint, including inside the iOS safe area.  */
+  function _cornerMetrics() {
+    const wrap = document.getElementById('orb-wrap');
+    const fallback = { margin: 32, size: 64 };
+    if (!wrap) return fallback;
+
+    const cs   = getComputedStyle(wrap);
+    const size = parseFloat(cs.getPropertyValue('--orb-size'));
+    let margin = parseFloat(cs.getPropertyValue('--orb-margin'));
+
+    /* --orb-margin is authored in rem; resolve it against the root font size */
+    if (cs.getPropertyValue('--orb-margin').includes('rem')) {
+      margin *= parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    }
+
+    /* Safe-area insets (iPhone landscape) are part of the real offset */
+    const safeB = parseFloat(cs.getPropertyValue('--safe-b')) || 0;
+    const safeR = parseFloat(cs.getPropertyValue('--safe-r')) || 0;
+
+    return {
+      margin: (isFinite(margin) ? margin : fallback.margin),
+      size:   (isFinite(size)   ? size   : fallback.size),
+      safeB:  safeB,
+      safeR:  safeR,
+    };
+  }
 
   function init() {
     let W     = window.innerWidth;
     let H     = window.innerHeight;
-    const dpr = Math.min(window.devicePixelRatio, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     /* ── Canvas ── */
     const canvas = document.createElement('canvas');
@@ -63,7 +95,8 @@
     /* ── Mouse tracking for eye look-at ── */
     let mouseX = W / 2;
     let mouseY = H / 2;
-    window.addEventListener('mousemove', function (e) {
+    window.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;   /* fingers don't hover */
       mouseX = e.clientX;
       mouseY = e.clientY;
     }, { passive: true });
@@ -149,19 +182,32 @@
 
     rafId = requestAnimationFrame(loop); // initial start
 
-    /* ── Resize ── */
-    window.addEventListener('resize', function () {
+    /* ── Resize ──────────────────────────────────────────────────────
+       Debounced: on mobile every URL-bar show/hide fires a resize, and
+       reallocating the canvas backing store on each one drops frames.   */
+    const onResize = PF.debounce(function () {
       W = window.innerWidth;
       H = window.innerHeight;
       canvas.style.width  = W + 'px';
       canvas.style.height = H + 'px';
       _resize(canvas, W, H, dpr);
-      /* Reset dirty-region state — old coords are invalid after canvas resize */
+      /* Reset dirty-region state — old coords are invalid after a resize */
       prevCx = -9999; prevCy = -9999; prevR = 0;
-    });
+    }, 120);
 
-    console.log('[OrbScene] 2D canvas init OK');
-    return { state, getCorner, getCenter };
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('orientationchange', onResize, { passive: true });
+
+    return {
+      state: state,
+      getCorner: getCorner,
+      getCornerScale: getCornerScale,
+      getCenter: getCenter,
+      destroy: function () {
+        cancelAnimationFrame(rafId);
+        canvas.remove();
+      },
+    };
   }
 
   /* ── Draw helpers ──────────────────────────────────────────── */
@@ -347,13 +393,22 @@
     canvas.height = Math.round(h * dpr);
   }
 
-  function getCorner(scale) {
-    const s      = scale !== undefined ? scale : 1;
-    const rem    = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const margin = MARGIN_REM * rem + SPHERE_R * s;
+  /* Scale at which the sphere matches the current button size */
+  function getCornerScale() {
+    const m = _cornerMetrics();
+    return (m.size * SPHERE_OVERSIZE) / (SPHERE_R * 2);
+  }
+
+  /* Centre of the resting position, in the canvas' centre-origin coordinates.
+     Note it is derived from the button box, not from the sphere radius, so
+     the drawn sphere is always concentric with the clickable area. */
+  function getCorner() {
+    const m       = _cornerMetrics();
+    const offsetX = m.margin + (m.safeR || 0) + m.size / 2;
+    const offsetY = m.margin + (m.safeB || 0) + m.size / 2;
     return {
-      x:  window.innerWidth  / 2 - margin,
-      y: -(window.innerHeight / 2 - margin),
+      x:   window.innerWidth  / 2 - offsetX,
+      y: -(window.innerHeight / 2 - offsetY),
     };
   }
 

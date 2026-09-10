@@ -9,7 +9,10 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: var(--space-4) var(--space-6);
+  min-height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) max(var(--space-6), var(--safe-l));
   /* backdrop-filter excluded from transition — animating it forces full repaints */
   transition: background var(--transition), border-color var(--transition);
   border-bottom: 1px solid transparent;
@@ -23,6 +26,7 @@
 }
 
 .nav-inner {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,7 +36,8 @@
 
 .nav-logo {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  min-width: 0;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--text);
@@ -106,37 +111,77 @@
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 767px) {
+/* The drawer stays in charge up to 959px: seven labelled entries plus the
+   name need ~900px, and squeezing them crushed the logo on tablets. */
+@media (max-width: 959px) {
   .nav-links {
     position: fixed;
     inset: 0;
-    top: 60px;
+    top: var(--nav-h);
     background: var(--bg);
     flex-direction: column;
-    justify-content: center;
-    gap: var(--space-8);
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: var(--space-2);
+    /* The drawer scrolls on its own if the menu is taller than the screen
+       (small phones in landscape) instead of clipping the last entries. */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: var(--space-6) var(--space-6)
+             calc(var(--space-12) + var(--safe-b));
     transform: translateX(100%);
-    transition: transform var(--transition);
+    /* visibility keeps the closed drawer out of the tab order and away from
+       screen readers — transform alone leaves it focusable off-screen */
+    visibility: hidden;
+    transition: transform var(--transition), visibility 0s linear 0.25s;
     border-top: 1px solid var(--border);
   }
 
-  .nav-links.open { transform: translateX(0); }
-  .nav-link { font-size: 1.1rem; }
+  .nav-links.open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform var(--transition), visibility 0s;
+  }
+
+  .nav-links li { width: 100%; }
+
+  .nav-link {
+    font-size: 1.05rem;
+    padding: var(--space-4) var(--space-2);
+    gap: var(--space-3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* The sliding underline is a desktop affordance; on the drawer it looked
+     like a stray line under every entry */
+  .nav-link::after { display: none; }
+  .nav-link.active { color: var(--accent); }
+
   .nav-toggle { display: flex; }
 }
 
 /* ── Hero Section ── */
 #hero {
-  min-height: 100svh;
+  min-height: 100vh;      /* fallback for browsers without svh */
+  min-height: 100svh;     /* small viewport: never clipped by the URL bar */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 80px;
+  padding-top: calc(var(--nav-h) + var(--space-6));
+  padding-bottom: var(--space-16);
   position: relative;
   overflow: hidden;
   background-color: var(--bg);
-  background-image: url('../../imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png');
+  background-image: image-set(
+    url('../../imgs/hero-bg.webp') type('image/webp'),
+    url('../../imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png') type('image/png')
+  );
+  background-image: -webkit-image-set(
+    url('../../imgs/hero-bg.webp') 1x,
+    url('../../imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png') 2x
+  );
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -159,7 +204,18 @@
   z-index: 0;
 }
 
-.hero-grid-bg { display: none; }
+/* A phone crops the wide hero image hard, so its busiest area ends up right
+   behind the copy — deepen the scrim there to keep the text readable.
+   Must come after the base #hero::before rule to win on source order. */
+@media (max-width: 767px) {
+  #hero::before {
+    background: linear-gradient(180deg,
+      rgba(13,13,15,0.62) 0%,
+      rgba(13,13,15,0.80) 55%,
+      var(--bg) 100%);
+  }
+}
+
 
 .hero-content {
   position: relative;
@@ -246,6 +302,12 @@
   animation: scrollBounce 2.5s ease-in-out infinite;
 }
 
+/* Short viewports (phone landscape, small laptops): the hint would overlap
+   the CTA buttons — drop it, it is decorative and aria-hidden anyway. */
+@media (max-height: 700px) and (max-width: 767px) {
+  .hero-scroll-hint { display: none; }
+}
+
 .scroll-line {
   width: 1px;
   height: 36px;
@@ -256,8 +318,11 @@
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   padding: 0.75rem 2rem;
+  min-height: 44px;
+  max-width: 100%;
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 700;
@@ -637,8 +702,10 @@
 
 .project-img-wrap img {
   width: 100%;
-  height: 220px;
+  height: auto;
+  aspect-ratio: 16 / 9;   /* reserves the space before the image loads → no layout shift */
   object-fit: cover;
+  background: var(--bg-alt);
   transition: transform 0.6s var(--ease-out);
   display: block;
 }
@@ -904,7 +971,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--space-6);
+  gap: clamp(var(--space-4), 4vw, var(--space-6));
   margin-top: var(--space-12);
 }
 
@@ -912,8 +979,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 90px;
-  height: 90px;
+  width: clamp(64px, 18vw, 90px);
+  height: clamp(64px, 18vw, 90px);
   background: var(--bg-card);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -1127,14 +1194,15 @@
 
 @media (max-width: 480px) {
   .avatar-ring {
-    width: 180px;
-    height: 180px;
+    width: min(180px, 60vw);
+    height: min(180px, 60vw);
   }
 }
 
 .avatar-img {
   position: absolute;
   width: 220%;
+  max-width: none;   /* the global img{max-width:100%} would undo the framing */
   height: auto;
   top: 1px;
   left: -1px;
@@ -1281,11 +1349,19 @@ footer {
   max-width: var(--max-width);
   margin-inline: auto;
   display: flex;
-  justify-content: center;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-4);
+  text-align: center;
+}
+
+@media (max-width: 639px) {
+  .footer-inner { justify-content: center; }
+}
+
+footer {
+  padding-bottom: calc(var(--space-8) + var(--safe-b));
 }
 
 .footer-copy {
@@ -1304,3 +1380,67 @@ footer {
 }
 
 .footer-built span { color: var(--accent); }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   TOUCH DEVICES
+   A :hover rule on a touchscreen fires on tap and then *stays* applied
+   until the next tap elsewhere — cards stay lifted, glows stay lit.
+   Neutralise the motion-based hover states and give a short :active
+   feedback instead, which is what a phone user actually expects.
+   ══════════════════════════════════════════════════════════════════════ */
+@media (hover: none) {
+  .project-card:hover,
+  .timeline-content:hover,
+  .edu-card:hover,
+  .social-link:hover,
+  .btn:hover,
+  .btn-primary:hover,
+  .btn-outline:hover,
+  .btn-uni-hub:hover,
+  .hero-social-btn:hover,
+  .badge:hover,
+  .timeline-dot:hover {
+    transform: none;
+  }
+
+  .project-card:hover::before { opacity: 0; }
+  .project-card:hover .project-img-wrap img { transform: none; }
+  .social-link:hover svg { transform: none; }
+
+  /* Colour-only hover states are harmless, but the lift/shadow ones are not */
+  .timeline-content:hover { box-shadow: none; }
+
+  .btn:active,
+  .project-card:active,
+  .social-link:active,
+  .hero-social-btn:active {
+    transform: scale(0.98);
+    transition-duration: 0.08s;
+  }
+}
+
+
+/* ── Education logo images (was inline styles in the markup) ── */
+.edu-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.edu-logo-img--dim { opacity: 0.85; }
+
+/* ── Small button variant (University template cards) ── */
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.9rem;
+  min-height: 40px;
+}
+
+/* The drawer starts below the navbar; without this the bar itself would stay
+   transparent and show the hero image through the open menu. */
+body.menu-open #navbar {
+  background: var(--bg);
+  border-color: var(--border);
+}

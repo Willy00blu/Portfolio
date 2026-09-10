@@ -1,2 +1,10 @@
+# macOS
 .DS_Store
-.nojekyll
+**/.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# NOTE: .nojekyll must stay tracked — GitHub Pages needs it to serve files
+# and folders whose names start with an underscore.

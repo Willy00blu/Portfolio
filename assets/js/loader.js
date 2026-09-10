@@ -1,113 +1,124 @@
 /**
  * loader.js — Full-screen intro / loading screen
  *
- * Sequence (normal motion):
- *  0.0s  orb fades in (scales up)
- *  0.4s  name + role fade in
- *  0.7s  progress bar appears, starts filling
- *  0.7s → 3.0s  bar fills (2.3s)
- *  3.2s  brief pause, status → "Ready"
- *  3.5s  loader slides up, site is revealed
- *  3.5s  dispatches 'loaderComplete' → orb guide starts
+ * Sequence (desktop, normal motion):
+ *  0.08s orb fades in (scales up)
+ *  0.40s name + role fade in
+ *  0.70s progress bar appears, starts filling
+ *  0.70s → 3.0s  bar fills
+ *  3.4s  loader slides up, site is revealed
+ *        → dispatches 'loaderComplete' when the slide finishes
  *
- * Sequence (prefers-reduced-motion):
- *  0.4s  loader slides up immediately (no bar fill, no settle pause)
- *  1.15s dispatches 'loaderComplete'
+ * Mobile phones get a shortened version (~1.6s) — the intro is a first
+ * impression, not something to sit through on a phone on mobile data.
+ * prefers-reduced-motion skips it almost entirely.
+ *
+ * Safety: whatever happens below, index.html carries an inline failsafe that
+ * tears the loader down after 8s and unlocks scrolling, so a JS error can
+ * never leave a visitor staring at a frozen splash screen.
  */
 
 'use strict';
 
-(function initLoader() {
+PF.module('Loader', function initLoader() {
 
   const loader = document.getElementById('loader');
   if (!loader) return;
 
-  /* Skip animation on subsequent navigations this session (University ↔ index),
-     but always show on reload. */
-  const navEntry = performance.getEntriesByType('navigation')[0];
-  const isReload = navEntry
-    ? navEntry.type === 'reload'
-    : (performance.navigation?.type === 1);
+  /* Reveal the page and tell the rest of the app it can start. */
+  function finish() {
+    loader.style.display = 'none';
+    loader.style.willChange = 'auto';
+    document.body.style.overflow = '';
+    document.body.classList.remove('is-loading');
+    document.dispatchEvent(new CustomEvent('loaderComplete'));
+  }
 
-  if (!isReload && sessionStorage.getItem('loaderShown')) {
+  /* Skip the animation on subsequent navigations in the same session
+     (University ↔ index), but always replay it on a real reload. */
+  if (!PF.isReload() && PF.storageGet('loaderShown')) {
     loader.style.display = 'none';
     document.body.style.overflow = '';
-    /* Fire loaderComplete after all scripts have registered their listeners */
+    document.body.classList.remove('is-loading');
+    /* Fire after the other scripts have registered their listeners */
     setTimeout(function () {
       document.dispatchEvent(new CustomEvent('loaderComplete'));
     }, 50);
     return;
   }
-  sessionStorage.setItem('loaderShown', '1');
+  PF.storageSet('loaderShown', '1');
 
-  const orb       = loader.querySelector('.loader-orb');
-  const textEl    = loader.querySelector('.loader-text');
-  const barWrap   = loader.querySelector('.loader-bar-wrap');
-  const bar       = loader.querySelector('.loader-bar');
-  const statusEl  = loader.querySelector('.loader-status');
+  const orb      = loader.querySelector('.loader-orb');
+  const textEl   = loader.querySelector('.loader-text');
+  const barWrap  = loader.querySelector('.loader-bar-wrap');
+  const bar      = loader.querySelector('.loader-bar');
+  const statusEl = loader.querySelector('.loader-status');
 
   /* ── Config ─────────────────────────────────────── */
-  const reducedMotion   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const BAR_DURATION_MS = reducedMotion ? 300 : 2300;
+  const reducedMotion = PF.reducedMotion();
+  const isPhone       = window.matchMedia('(max-width: 767px)').matches;
 
-  const STATUS_STEPS = reducedMotion ? [] : [
-    { at: 700,  text: 'Initializing...' },
-    { at: 1500, text: 'Loading projects...' },
-    { at: 2400, text: 'Almost there...' },
-    { at: 3100, text: 'Ready.' },
-  ];
+  const BAR_DURATION_MS = reducedMotion ? 300 : (isPhone ? 900 : 2300);
+
+  const STATUS_STEPS = reducedMotion ? [] : (isPhone
+    ? [{ at: 700, text: 'Loading…' }, { at: 1450, text: 'Ready.' }]
+    : [
+        { at: 700,  text: 'Initializing...' },
+        { at: 1500, text: 'Loading projects...' },
+        { at: 2400, text: 'Almost there...' },
+        { at: 3100, text: 'Ready.' },
+      ]);
 
   /* ── Force scroll to top + lock body ──────────── */
   window.scrollTo({ top: 0, behavior: 'instant' });
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('is-loading');
 
   /* ── Timeline ───────────────────────────────────── */
   const timers = [];
+  const at = (fn, ms) => timers.push(setTimeout(fn, ms));
 
-  // Step 1 — orb appears
-  timers.push(setTimeout(() => orb?.classList.add('visible'), 80));
+  at(() => orb && orb.classList.add('visible'), 80);
+  at(() => textEl && textEl.classList.add('visible'), isPhone ? 260 : 400);
 
-  // Step 2 — text appears
-  timers.push(setTimeout(() => textEl?.classList.add('visible'), 400));
+  at(function () {
+    if (barWrap)  barWrap.classList.add('visible');
+    if (statusEl) statusEl.classList.add('visible');
 
-  // Step 3 — bar appears + starts filling
-  timers.push(setTimeout(() => {
-    barWrap?.classList.add('visible');
-    statusEl?.classList.add('visible');
-
-    // Set transition duration then kick off fill
-    requestAnimationFrame(() => {
+    /* Set the transition duration, then kick off the fill on the next frame */
+    requestAnimationFrame(function () {
       if (bar) bar.style.transition = `width ${BAR_DURATION_MS}ms linear`;
-      requestAnimationFrame(() => {
+      requestAnimationFrame(function () {
         if (bar) bar.style.width = '100%';
       });
     });
-  }, 700));
+  }, isPhone ? 450 : 700);
 
-  // Status text steps
-  STATUS_STEPS.forEach(({ at, text }) => {
-    timers.push(setTimeout(() => {
-      if (statusEl) statusEl.textContent = text;
-    }, at));
+  STATUS_STEPS.forEach(function (step) {
+    at(function () { if (statusEl) statusEl.textContent = step.text; }, step.at);
   });
 
-  // Step 4 — exit
+  /* ── Exit ───────────────────────────────────────── */
   const EXIT_AT = reducedMotion
-    ? 400  // minimal delay for reduced-motion users (skip bar fill + settle pause)
-    : 700 + BAR_DURATION_MS + 400; // bar start + fill + small pause
-  const TRANSITION_MS = 750; // matches CSS transition duration
+    ? 400
+    : (isPhone ? 450 : 700) + BAR_DURATION_MS + (isPhone ? 250 : 400);
+  const TRANSITION_MS = 750; /* matches the CSS transition duration */
 
-  timers.push(setTimeout(() => {
-    /* Scroll to top while loader still covers the screen → no visible teleport */
+  at(function () {
+    /* Scroll to top while the loader still covers the screen → no visible jump */
     window.scrollTo({ top: 0, behavior: 'instant' });
     loader.classList.add('exit');
-  }, EXIT_AT));
+  }, EXIT_AT);
 
-  timers.push(setTimeout(() => {
-    loader.style.display = 'none';
-    loader.style.willChange = 'auto';
-    document.body.style.overflow = '';
-    document.dispatchEvent(new CustomEvent('loaderComplete'));
-  }, EXIT_AT + TRANSITION_MS));
+  at(finish, EXIT_AT + TRANSITION_MS);
 
-})();
+  /* If the tab is hidden during the intro the timers are throttled and the
+     splash can still be up on return — collapse it immediately instead. */
+  document.addEventListener('visibilitychange', function onHide() {
+    if (!document.hidden) return;
+    document.removeEventListener('visibilitychange', onHide);
+    timers.forEach(clearTimeout);
+    finish();
+  });
+
+});

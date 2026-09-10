@@ -6,6 +6,28 @@
 
 import { COURSES, AUTOMATIONS, TEMPLATES, computeStats, SVG_DOC, SVG_EXT } from './uni-data.js';
 
+/* ── Escaping ───────────────────────────────────────────────────────
+   Every card below is built as an HTML string. The data is authored by
+   hand in uni-data.js, but a stray "<" or an apostrophe in a course name
+   would silently break the markup, so text values go through esc() and
+   only the SVG constants are injected raw.                            */
+function esc(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/* Only allow links we control the shape of — never javascript: URLs */
+function safeUrl(url) {
+  const u = String(url ?? '').trim();
+  if (!u || u === '#') return null;
+  if (/^(https?:|mailto:|\/|\.{1,2}\/|#)/i.test(u)) return esc(u);
+  return null;
+}
+
 /* ── SVG constants (uni.js-only) ────────────────────────────────── */
 const SVG_IMG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const SVG_INFO = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -29,24 +51,36 @@ function renderStats() {
    RENDER — NOTES TAB
    ══════════════════════════════════════════════════════════════════ */
 function buildCourseCard(course, idx) {
-  const hasNotes = course.notes;
+  const url      = safeUrl(course.notesUrl);
+  const hasNotes = !!course.notes && !!url;
+  const label    = course.notesLabel || 'Notes';
+
   const notesHtml = hasNotes
-    ? `<span class="notes-badge">${SVG_DOC}${course.notesLabel}</span>`
+    ? `<span class="notes-badge">${SVG_DOC}${esc(label)}</span>`
     : '';
+
   const footerAction = hasNotes
-    ? `<a href="${course.notesUrl}" class="course-link" target="_blank" rel="noopener">Open ${course.notesLabel === 'PDF' ? 'PDF' : 'notes'} ${SVG_EXT}</a>`
-    : `<span class="course-link-unavailable">${course.notesStatus}</span>`;
+    ? `<a href="${url}" class="course-link" target="_blank" rel="noopener noreferrer"
+          aria-label="Open ${esc(label === 'PDF' ? 'PDF' : 'notes')} — ${esc(course.name)}">
+         Open ${esc(label === 'PDF' ? 'PDF' : 'notes')} ${SVG_EXT}</a>`
+    : `<span class="course-link-unavailable">${esc(course.notesStatus || 'notes coming soon')}</span>`;
+
+  const summary = course.summary
+    ? `<p class="course-summary">${esc(course.summary)}</p>`
+    : '';
 
   return `
-    <div class="course-card${hasNotes ? ' has-notes' : ''} reveal-scale" style="transition-delay:${idx * 0.09}s">
+    <div class="course-card${hasNotes ? ' has-notes' : ''} reveal-scale"
+         data-search="${esc((course.name + ' ' + (course.professor || '')).toLowerCase())}"
+         style="transition-delay:${(idx % 9) * 0.06}s">
       <div class="course-card-top">
-        <h4 class="course-card-name">${course.name}</h4>
+        <h4 class="course-card-name">${esc(course.name)}</h4>
         ${notesHtml}
       </div>
-      <p class="course-professor">${course.professor}</p>
-      <p class="course-summary">${course.summary}</p>
+      <p class="course-professor">${esc(course.professor)}</p>
+      ${summary}
       <div class="course-footer">
-        <span class="course-credits">${course.credits}</span>
+        <span class="course-credits">${esc(course.credits)}</span>
         ${footerAction}
       </div>
     </div>`;
@@ -54,28 +88,30 @@ function buildCourseCard(course, idx) {
 
 function buildYearPanel(year, isFirst) {
   const isEmpty   = year.courses.length === 0;
-  const cardsHtml = isEmpty
-    ? ''
-    : year.courses.map((c, i) => buildCourseCard(c, i)).join('');
-  const emptyHtml = isEmpty
-    ? `<p class="no-results" style="display:block;">No courses yet — section coming soon.</p>`
-    : '';
+  const cardsHtml = year.courses.map((c, i) => buildCourseCard(c, i)).join('');
+
+  /* One status line per year, whose text switches between "nothing here yet"
+     and "nothing matches your search" — two overlapping nodes used to fight
+     over the same slot. */
   return `
-    <div class="year-panel${isFirst ? ' active' : ''}" id="${year.id}" role="tabpanel">
+    <div class="year-panel${isFirst ? ' active' : ''}" id="${esc(year.id)}" role="tabpanel">
       <div class="year-header">
-        <h3>${year.title}</h3>
+        <h3>${esc(year.title)}</h3>
         ${!isEmpty ? `<span class="year-count">${year.courses.length} courses</span>` : ''}
       </div>
-      <div class="course-grid" id="grid-${year.id}">${cardsHtml}</div>
-      ${emptyHtml}
-      <p class="no-results" id="no-results-${year.id}">No courses found.</p>
+      <div class="course-grid">${cardsHtml}</div>
+      <p class="no-results" data-empty-text="No courses yet — section coming soon."
+         ${isEmpty ? 'style="display:block;"' : ''}>${
+           isEmpty ? 'No courses yet — section coming soon.' : 'No courses found.'
+         }</p>
     </div>`;
 }
 
 function buildDegreePanel(degKey, isFirst) {
   const deg = COURSES[degKey];
   const yearTabsHtml = deg.years.map((y, i) =>
-    `<button class="year-tab${i === 0 ? ' active' : ''}" data-year="${y.id}" role="tab">${y.label}</button>`
+    `<button class="year-tab${i === 0 ? ' active' : ''}" data-year="${esc(y.id)}"
+             role="tab" aria-selected="${i === 0}">${esc(y.label)}</button>`
   ).join('');
   const yearPanelsHtml = deg.years.map((y, i) => buildYearPanel(y, i === 0)).join('');
 
@@ -94,7 +130,7 @@ function renderNotesTab() {
 
   const degKeys = Object.keys(COURSES);
   const degTabsHtml = degKeys.map((key, i) =>
-    `<button class="deg-tab${i === 0 ? ' active' : ''}" data-deg="${key}" role="tab" aria-selected="${i === 0}">${COURSES[key].label}</button>`
+    `<button class="deg-tab${i === 0 ? ' active' : ''}" data-deg="${esc(key)}" role="tab" aria-selected="${i === 0}">${esc(COURSES[key].label)}</button>`
   ).join('');
   const degPanelsHtml = degKeys.map((key, i) => buildDegreePanel(key, i === 0)).join('');
 
@@ -120,19 +156,30 @@ function renderAutomationsTab() {
   const panel = document.getElementById('tab-automations');
   if (!panel) return;
 
-  const cardsHtml = AUTOMATIONS.map((a, i) => `
-    <div class="auto-card reveal-scale" data-title="${a.title}" style="transition-delay:${i * 0.09}s">
-      <div class="auto-card-bar ${a.barClass}"></div>
+  const cardsHtml = AUTOMATIONS.map((a, i) => {
+    const url  = safeUrl(a.url);
+    const icon = a.iconImg
+      ? `<img src="${esc(a.iconImg)}" ${a.iconFallback ? `data-fallback="${esc(a.iconFallback)}"` : ''}
+              alt="${esc(a.iconAlt || '')}" width="36" height="36" loading="lazy"
+              style="object-fit:contain;">`
+      : (a.icon || '');
+
+    return `
+    <div class="auto-card reveal-scale"
+         data-search="${esc((a.title + ' ' + a.desc + ' ' + (a.tags || []).join(' ')).toLowerCase())}"
+         style="transition-delay:${(i % 9) * 0.06}s">
+      <div class="auto-card-bar ${esc(a.barClass)}"></div>
       <div class="auto-card-body">
-        <div class="auto-card-icon">${a.iconImg ? `<img src="${a.iconImg}" alt="${a.iconAlt || ''}" width="36" height="36" style="object-fit:contain;">` : a.icon}</div>
-        <h3 class="auto-card-title">${a.title}</h3>
-        <p class="auto-card-desc">${a.desc}</p>
+        <div class="auto-card-icon">${icon}</div>
+        <h3 class="auto-card-title">${esc(a.title)}</h3>
+        <p class="auto-card-desc">${esc(a.desc)}</p>
         <div class="auto-card-footer">
-          ${a.tags.map(t => `<span class="auto-tag">${t}</span>`).join('')}
-          ${a.url ? `<a class="auto-card-link" href="${a.url}" target="_blank" rel="noopener noreferrer">${SVG_EXT}${a.urlLabel || 'Link'}</a>` : ''}
+          ${(a.tags || []).map(t => `<span class="auto-tag">${esc(t)}</span>`).join('')}
+          ${url ? `<a class="auto-card-link" href="${url}" target="_blank" rel="noopener noreferrer">${SVG_EXT}${esc(a.urlLabel || 'Link')}</a>` : ''}
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   panel.innerHTML = `
     <div style="margin-bottom: var(--space-8);">
@@ -159,18 +206,26 @@ function renderTemplateTab() {
 
   const cardsHtml = TEMPLATES.map((t, i) => {
     const icon = t.ctaType === 'github' ? SVG_GH : SVG_NOTION;
+    const url  = safeUrl(t.ctaUrl);
+
+    /* A card whose link is missing shows a disabled state instead of an
+       anchor to "#" that opens a blank tab. */
+    const cta = url
+      ? `<a href="${url}" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
+           ${icon} ${esc(t.cta)}
+         </a>`
+      : `<span class="course-link-unavailable">Coming soon</span>`;
+
     return `
-    <div class="auto-card reveal-scale" style="transition-delay:${i * 0.09}s">
+    <div class="auto-card reveal-scale"
+         data-search="${esc((t.title + ' ' + t.desc).toLowerCase())}"
+         style="transition-delay:${(i % 9) * 0.06}s">
       <div class="auto-card-bar ${t.ctaType === 'github' ? 'bar-github' : 'bar-notion'}"></div>
       <div class="auto-card-body">
-        <div class="auto-card-icon">${t.icon}</div>
-        <h3 class="auto-card-title">${t.title}</h3>
-        <p class="auto-card-desc">${t.desc}</p>
-        <div class="auto-card-footer">
-          <a href="${t.ctaUrl}" class="btn btn-outline" style="font-size:0.8rem;padding:0.35rem 0.85rem;" target="_blank" rel="noopener">
-            ${icon} ${t.cta}
-          </a>
-        </div>
+        <div class="auto-card-icon" aria-hidden="true">${esc(t.icon)}</div>
+        <h3 class="auto-card-title">${esc(t.title)}</h3>
+        <p class="auto-card-desc">${esc(t.desc)}</p>
+        <div class="auto-card-footer">${cta}</div>
       </div>
     </div>`;
   }).join('');
@@ -191,24 +246,42 @@ function renderTemplateTab() {
    TAB SWITCHING — Main (3 tabs)
    ══════════════════════════════════════════════════════════════════ */
 function initMainTabs() {
-  const tabs   = document.querySelectorAll('.uni-tab');
+  const tabs   = Array.from(document.querySelectorAll('.uni-tab'));
   const panels = document.querySelectorAll('.uni-panel');
-  const search = document.getElementById('uni-search-input');
+  if (!tabs.length) return;
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.tab;
+  function activate(tab) {
+    const target = tab.dataset.tab;
 
-      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-      panels.forEach(p => p.classList.remove('active'));
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + target)?.classList.add('active');
 
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      document.getElementById('tab-' + target)?.classList.add('active');
+    /* Re-apply the current query to the panel that just became visible
+       instead of silently clearing it. */
+    const search = document.getElementById('uni-search-input');
+    runSearch(search ? search.value : '');
 
-      if (search && search.value) { search.value = ''; runSearch(''); }
+    triggerReveal('#tab-' + target + ' .reveal-scale');
+  }
 
-      triggerReveal('#tab-' + target + ' .reveal-scale');
+  tabs.forEach((tab, i) => {
+    tab.tabIndex = tab.classList.contains('active') ? 0 : -1;
+    tab.addEventListener('click', () => activate(tab));
+
+    /* Arrow-key navigation, as expected from a role="tablist" */
+    tab.addEventListener('keydown', e => {
+      const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!dir) return;
+      e.preventDefault();
+      const next = tabs[(i + dir + tabs.length) % tabs.length];
+      next.focus();
+      activate(next);
     });
   });
 }
@@ -232,6 +305,7 @@ function initNotesTabs() {
       degBtn.classList.add('active');
       degBtn.setAttribute('aria-selected', 'true');
       document.getElementById('deg-' + target)?.classList.add('active');
+      reapplySearch();
       triggerReveal('#deg-' + target + ' .reveal-scale');
       return;
     }
@@ -246,6 +320,7 @@ function initNotesTabs() {
       yearBtn.classList.add('active');
       yearBtn.setAttribute('aria-selected', 'true');
       document.getElementById(targetYear)?.classList.add('active');
+      reapplySearch();
       triggerReveal('#' + targetYear + ' .reveal-scale');
     }
   });
@@ -255,40 +330,45 @@ function initNotesTabs() {
 /* ══════════════════════════════════════════════════════════════════
    SEARCH / FILTER
    ══════════════════════════════════════════════════════════════════ */
+function reapplySearch() {
+  const input = document.getElementById('uni-search-input');
+  if (input && input.value.trim()) runSearch(input.value);
+}
+
+/**
+ * Filter the cards of the visible panel.
+ * Matching is done against the data-search attribute baked into each card at
+ * render time, so no DOM text is read while typing (no forced reflow), and
+ * reads are separated from writes.
+ */
 function runSearch(query) {
-  const q = query.trim().toLowerCase();
+  const q = String(query || '').trim().toLowerCase();
   const activePanel = document.querySelector('.uni-panel.active');
   if (!activePanel) return;
 
-  /* Batch: collect visibility decisions first (reads), then apply (writes)
-     to avoid forced layout reflow on each card.                           */
-  if (activePanel.id === 'tab-notes') {
-    const visibleYear = activePanel.querySelector('.degree-panel.active .year-panel.active');
-    if (!visibleYear) return;
+  /* Scope: the visible year inside Notes, the whole panel elsewhere */
+  const scope = activePanel.id === 'tab-notes'
+    ? activePanel.querySelector('.degree-panel.active .year-panel.active')
+    : activePanel;
+  if (!scope) return;
 
-    const cards   = visibleYear.querySelectorAll('.course-card');
-    const matches = Array.from(cards).map(card => {
-      const name = card.querySelector('.course-card-name')?.textContent.toLowerCase() ?? '';
-      return !q || name.includes(q);
-    });
-    cards.forEach((card, i) => { card.style.display = matches[i] ? '' : 'none'; });
+  const cards = Array.from(scope.querySelectorAll('.course-card, .auto-card'));
+  if (!cards.length) return;
 
-    const visible   = matches.filter(Boolean).length;
-    const noResults = visibleYear.querySelector('.no-results');
-    if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+  const matches = cards.map(card => !q || (card.dataset.search || '').includes(q));
+  cards.forEach((card, i) => { card.style.display = matches[i] ? '' : 'none'; });
 
-  } else if (activePanel.id === 'tab-automations') {
-    const cards   = activePanel.querySelectorAll('.auto-card');
-    const matches = Array.from(cards).map(card => {
-      const title = card.querySelector('.auto-card-title')?.textContent.toLowerCase() ?? '';
-      const desc  = card.querySelector('.auto-card-desc')?.textContent.toLowerCase()  ?? '';
-      return !q || title.includes(q) || desc.includes(q);
-    });
-    cards.forEach((card, i) => { card.style.display = matches[i] ? '' : 'none'; });
+  const visible   = matches.filter(Boolean).length;
+  const noResults = scope.querySelector('.no-results');
+  if (!noResults) return;
 
-    const visible   = matches.filter(Boolean).length;
-    const noResults = document.getElementById('no-results-auto');
-    if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+  if (visible === 0) {
+    noResults.textContent = q
+      ? 'No results for “' + query.trim() + '”.'
+      : (noResults.dataset.emptyText || 'Nothing here yet.');
+    noResults.style.display = 'block';
+  } else {
+    noResults.style.display = 'none';
   }
 }
 
@@ -296,13 +376,34 @@ function initSearch() {
   const input = document.getElementById('uni-search-input');
   if (!input) return;
 
-  /* Debounce: wait 120 ms of silence before filtering — avoids
-     running querySelector loops on every single keystroke.      */
+  const clearBtn = document.getElementById('uni-search-clear');
+
+  /* Debounced: 120 ms of silence before filtering, so holding a key down
+     does not re-filter on every repeat. */
   let debounceTimer;
   input.addEventListener('input', () => {
     clearTimeout(debounceTimer);
+    if (clearBtn) clearBtn.hidden = !input.value;
     debounceTimer = setTimeout(() => runSearch(input.value), 120);
   });
+
+  /* Escape clears — the expected shortcut in any search field */
+  input.addEventListener('keydown', e => {
+    if (e.key !== 'Escape' || !input.value) return;
+    input.value = '';
+    if (clearBtn) clearBtn.hidden = true;
+    runSearch('');
+  });
+
+  if (clearBtn) {
+    clearBtn.hidden = true;
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      clearBtn.hidden = true;
+      runSearch('');
+      input.focus();
+    });
+  }
 }
 
 
@@ -327,19 +428,33 @@ function triggerReveal(selector) {
    INIT
    ══════════════════════════════════════════════════════════════════ */
 function init() {
-  renderStats();
-  renderNotesTab();
-  renderAutomationsTab();
-  renderTemplateTab();
+  try {
+    renderStats();
+    renderNotesTab();
+    renderAutomationsTab();
+    renderTemplateTab();
 
-  initMainTabs();
-  initNotesTabs();
-  initSearch();
+    initMainTabs();
+    initNotesTabs();
+    initSearch();
 
-  /* Reveal cards for all tabs so they're visible when their panel is shown */
-  triggerReveal('#tab-notes .reveal-scale');
-  triggerReveal('#tab-automations .reveal-scale');
-  triggerReveal('#tab-template .reveal-scale');
+    /* Reveal cards for all tabs so they're visible when their panel is shown */
+    triggerReveal('#tab-notes .reveal-scale');
+    triggerReveal('#tab-automations .reveal-scale');
+    triggerReveal('#tab-template .reveal-scale');
+  } catch (err) {
+    /* The whole page body is rendered from JS: if that fails the visitor
+       must get an explanation and a way out, not three empty panels. */
+    console.error('[UniHub] render failed:', err);
+    const panel = document.getElementById('tab-notes');
+    if (panel) {
+      panel.innerHTML =
+        '<p class="no-results" style="display:block;">' +
+        'This section could not be loaded. Please reload the page — ' +
+        'or <a class="course-link" href="../index.html">go back to the portfolio</a>.' +
+        '</p>';
+    }
+  }
 }
 
 /* Module scripts are deferred but DOMContentLoaded may have already fired —

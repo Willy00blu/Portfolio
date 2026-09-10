@@ -2,9 +2,31 @@
  * animations.js — IntersectionObserver reveals, staggered children
  */
 
-(function initRevealAnimations() {
+PF.module('Reveal', function initRevealAnimations() {
 
   const REVEAL_SELECTOR = '.reveal, .reveal-left, .reveal-right, .reveal-scale';
+
+  /* Reveal classes start at opacity:0. If IntersectionObserver is missing
+     (very old WebViews) nothing would ever add .revealed and the whole page
+     would be blank — so show everything immediately instead. */
+  function revealAll() {
+    document.querySelectorAll(REVEAL_SELECTOR).forEach(function (el) {
+      el.classList.add('revealed');
+    });
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    revealAll();
+    /* Elements that only get their reveal class later, in this same file */
+    document.querySelectorAll('.badge, .timeline-item, .project-card, .section-label')
+      .forEach(function (el) { el.classList.add('reveal', 'revealed'); });
+    return;
+  }
+
+  /* Anything still hidden after 6s (a missed observer callback, a display
+     change, a tab restored from bfcache) is forced visible: content that
+     cannot be read is worse than content that appears without animating. */
+  setTimeout(revealAll, 6000);
 
   const STAGGER_BADGE    = 0.045; // seconds
   const STAGGER_TIMELINE = 0.07;
@@ -30,6 +52,9 @@
   );
 
   revealTargets.forEach(el => observer.observe(el));
+
+  /* Elements already in view on load (above the fold) are revealed by the
+     observer's first callback, which fires right after this. */
 
 
   /* ── Staggered children ─────────────────────────────────────
@@ -90,12 +115,18 @@
     });
   });
 
-})();
+});
 
 
 /* ── Section label line animation ────────────────────────────── */
-(function initSectionLabels() {
+PF.module('SectionLabels', function initSectionLabels() {
   const labels = document.querySelectorAll('.section-label');
+  if (!labels.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    labels.forEach(l => l.classList.add('reveal', 'revealed'));
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -114,4 +145,4 @@
     label.setAttribute('data-delay', String(i % 6));
     observer.observe(label);
   });
-})();
+});

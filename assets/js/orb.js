@@ -3,7 +3,10 @@
 /**
  * orb.js — Floating portfolio guide assistant
  *
- * Depends on: gsap.min.js, orb-scene.js (loaded before this).
+ * Depends on: orb-scene.js (required) and utils.js.
+ * GSAP is optional — PF.animator() falls back to an internal rAF tween if the
+ * CDN is blocked or offline, so the orb never disappears because of a network
+ * failure.
  *
  * Sequence after 'loaderComplete':
  *  1. 2D canvas sphere appears at viewport centre (scale 2.1)
@@ -11,7 +14,7 @@
  *  3. Sphere flies to bottom-right corner via GSAP expo.out
  *  4. Bubble shows hero message; updates per section on scroll
  */
-(function initOrb() {
+PF.module('Orb', function initOrb() {
 
   const bubble   = document.getElementById('orb-bubble');
   const textEl   = document.getElementById('orb-text');
@@ -21,10 +24,25 @@
 
   if (!bubble || !textEl || !hitBtn) return;
 
-  if (typeof OrbScene === 'undefined' || typeof gsap === 'undefined') {
-    console.error('[Orb] OrbScene or GSAP not loaded');
+  if (typeof OrbScene === 'undefined') {
+    /* Without the renderer there is nothing to point at — remove the empty
+       hit target so it cannot swallow taps in the corner. */
+    const wrap = document.getElementById('orb-wrap');
+    if (wrap) wrap.remove();
     return;
   }
+
+  /* GSAP comes from a CDN that can be blocked, offline or simply slow.
+     PF.animator() hands back GSAP when it is there and an equivalent
+     rAF tween when it is not, so the orb behaves identically either way. */
+  const anim = PF.animator();
+
+  /* Touch users get the guide once per section and then it steps aside:
+     a bubble parked over the bottom-right corner of a phone screen covers
+     content and sits exactly where the thumb scrolls. */
+  const isTouch       = PF.isTouch();
+  const AUTO_HIDE_MS  = 6500;
+  let   autoHideTimer = null;
 
   /* ── Page-level config via data attributes on <body> ─────── */
   const introText  = document.body.dataset.orbIntro  || 'System ready. Scroll to initialize the tour';
@@ -35,20 +53,17 @@
   const _SHOWN_KEY   = 'orbIntroShownPages';
   const _currentPath = window.location.pathname;
 
-  function _hasShownIntro() {
-    try { return JSON.parse(sessionStorage.getItem(_SHOWN_KEY) || '[]').includes(_currentPath); }
-    catch { return false; }
+  function _shownList() {
+    try { return JSON.parse(PF.storageGet(_SHOWN_KEY, '[]')) || []; }
+    catch { return []; }
   }
+  function _hasShownIntro() { return _shownList().includes(_currentPath); }
   function _markIntroShown() {
-    try {
-      const shown = JSON.parse(sessionStorage.getItem(_SHOWN_KEY) || '[]');
-      if (!shown.includes(_currentPath)) shown.push(_currentPath);
-      sessionStorage.setItem(_SHOWN_KEY, JSON.stringify(shown));
-    } catch {}
+    const shown = _shownList();
+    if (!shown.includes(_currentPath)) shown.push(_currentPath);
+    PF.storageSet(_SHOWN_KEY, JSON.stringify(shown));
   }
-  function _clearShownIntros() {
-    try { sessionStorage.removeItem(_SHOWN_KEY); } catch {}
-  }
+  function _clearShownIntros() { PF.storageRemove(_SHOWN_KEY); }
 
   /* ── Messages ─────────────────────────────────────────────── */
   const MESSAGES = {
@@ -64,7 +79,9 @@
 
   const TYPING_CPS     = 55;
   const INTRO_PAUSE_MS = 1100;
-  const CORNER_SCALE   = 1.44;  /* sphere size at rest in corner (+20%) */
+  /* Resting size is derived from the button in orb.css — one source of truth
+     for both the drawn sphere and the tap target (see orb-scene.js). */
+  const CORNER_SCALE   = OrbScene.getCornerScale ? OrbScene.getCornerScale() : 1.44;
 
   let typingTimer    = null;
   let currentSection = null;
@@ -78,12 +95,25 @@
 
   /* ── Init 2D canvas scene ────────────────────────────────── */
   const orbData = OrbScene.init();
-  if (!orbData) return;
+  if (!orbData) {
+    const wrap = document.getElementById('orb-wrap');
+    if (wrap) wrap.remove();
+    return;
+  }
   const { state, getCorner, getCenter } = orbData;
 
   /* ── Typing (rAF-based, synced to display refresh) ────────── */
   function typeText(text, onDone) {
     cancelAnimationFrame(typingTimer);
+
+    /* Reduced motion: show the whole sentence at once */
+    if (PF.reducedMotion()) {
+      textEl.classList.remove('typing');
+      textEl.textContent = text;
+      if (onDone) onDone();
+      return;
+    }
+
     textEl.textContent = '';
     textEl.classList.add('typing');
     let i = 0, lastTs = null;
@@ -118,9 +148,13 @@
     }
     bubble.classList.add('visible');
     typeText(msg.text);
+
+    clearTimeout(autoHideTimer);
+    if (isTouch) autoHideTimer = setTimeout(hideBubble, AUTO_HIDE_MS);
   }
 
   function hideBubble() {
+    clearTimeout(autoHideTimer);
     cancelAnimationFrame(typingTimer);
     textEl.classList.remove('typing');
     bubble.classList.remove('visible');
@@ -166,8 +200,8 @@
     /* Brief pause so bubble fade-out completes before flight */
     setTimeout(function () {
       document.body.classList.remove('orb-intro'); /* restore corner layout */
-      const corner = getCorner(CORNER_SCALE);
-      gsap.to(state, {
+      const corner = getCorner();
+      anim.to(state, {
         x:         corner.x,
         y:         corner.y,
         scale:     CORNER_SCALE,
@@ -204,21 +238,21 @@
 
   /* ── Hover — scale sphere via hit button ──────────────────── */
   hitBtn.addEventListener('mouseenter', function () {
-    if (!orbReady || typeof gsap === 'undefined') return;
-    gsap.to(state, { scale: CORNER_SCALE * 1.08, duration: 0.2, ease: 'power2.out' });
+    if (!orbReady || isTouch) return;
+    anim.to(state, { scale: CORNER_SCALE * 1.08, duration: 0.2, ease: 'power2.out' });
   });
   hitBtn.addEventListener('mouseleave', function () {
-    if (!orbReady || typeof gsap === 'undefined') return;
-    gsap.to(state, { scale: CORNER_SCALE, duration: 0.2, ease: 'power2.out' });
+    if (!orbReady || isTouch) return;
+    anim.to(state, { scale: CORNER_SCALE, duration: 0.2, ease: 'power2.out' });
   });
 
   /* ── Click ────────────────────────────────────────────────── */
   hitBtn.addEventListener('click', function () {
-    if (!orbReady || typeof gsap === 'undefined') return;
+    if (!orbReady) return;
     /* Tactile bounce */
-    gsap.to(state, { scale: CORNER_SCALE * 0.88, duration: 0.08, ease: 'power2.in',
+    anim.to(state, { scale: CORNER_SCALE * 0.88, duration: 0.08, ease: 'power2.in',
       onComplete: function () {
-        gsap.to(state, { scale: CORNER_SCALE, duration: 0.25, ease: 'back.out(2)' });
+        anim.to(state, { scale: CORNER_SCALE, duration: 0.25, ease: 'back.out(2)' });
       },
     });
     if (bubble.classList.contains('visible')) {
@@ -230,14 +264,20 @@
     }
   });
 
-  /* ── Reposition on window resize ─────────────────────────── */
-  window.addEventListener('resize', function () {
+  /* ── Reposition on resize / rotation ──────────────────────
+     Debounced: on mobile the URL bar collapsing fires resize continuously,
+     and re-snapping the orb on every event made it jitter.               */
+  const reposition = PF.debounce(function () {
     if (!orbReady) return;
-    gsap.killTweensOf(state);
-    const corner = getCorner(CORNER_SCALE);
+    anim.kill(state);
+    const corner = getCorner();
     state.x = corner.x;
     state.y = corner.y;
-  }, { passive: true });
+    state.scale = OrbScene.getCornerScale ? OrbScene.getCornerScale() : CORNER_SCALE;
+  }, 120);
+
+  window.addEventListener('resize', reposition, { passive: true });
+  window.addEventListener('orientationchange', reposition, { passive: true });
 
   /* ── Close button ─────────────────────────────────────────── */
   if (closeBtn) {
@@ -251,15 +291,26 @@
   }
 
   /* ── Start ────────────────────────────────────────────────── */
+  function _snapToCorner() {
+    const corner = getCorner();
+    state.x     = corner.x;
+    state.y     = corner.y;
+    state.scale = CORNER_SCALE;
+    orbReady = true;
+    hitBtn.style.pointerEvents = '';
+    if (!userClosed) showBubble(_defaultSection);
+    initSectionObserver();
+  }
+
   let _started = false;
   function _maybeStart() {
     if (_started) return;
     _started = true;
 
-    const navEntry = performance.getEntriesByType('navigation')[0];
-    const isReload = navEntry
-      ? navEntry.type === 'reload'
-      : (performance.navigation?.type === 1);
+    /* Reduced motion: no fly-in, no spotlight — the orb is simply there */
+    if (PF.reducedMotion()) { _snapToCorner(); return; }
+
+    const isReload = PF.isReload();
 
     /* isSubPage = true on pages with a custom orb-intro message (e.g. University) */
     const isSubPage = !!document.body.dataset.orbIntro;
@@ -275,14 +326,7 @@
       startIntro();
     } else {
       /* Sub-page reload OR already seen intro — go straight to corner */
-      const corner = getCorner(CORNER_SCALE);
-      state.x     = corner.x;
-      state.y     = corner.y;
-      state.scale = CORNER_SCALE;
-      orbReady = true;
-      hitBtn.style.pointerEvents = '';
-      if (!userClosed) showBubble(_defaultSection);
-      initSectionObserver();
+      _snapToCorner();
     }
   }
 
@@ -294,4 +338,4 @@
   /* If no loader element at all, start after 600 ms */
   if (!document.getElementById('loader')) setTimeout(_maybeStart, 600);
 
-})();
+});

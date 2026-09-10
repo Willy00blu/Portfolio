@@ -29,11 +29,18 @@
 
 /* ── Page hero ── */
 .uni-page-hero {
-  padding-top: calc(80px + var(--space-24));
+  padding-top: calc(var(--nav-h) + var(--space-16));
   padding-bottom: 14rem;
   position: relative;
   background-color: var(--bg);
-  background-image: url('../../imgs/uni-hero.png');
+  background-image: image-set(
+    url('../../imgs/uni-hero.webp') type('image/webp'),
+    url('../../imgs/uni-hero.png') type('image/png')
+  );
+  background-image: -webkit-image-set(
+    url('../../imgs/uni-hero.webp') 1x,
+    url('../../imgs/uni-hero.png') 2x
+  );
   background-size: cover;
   background-position: center 35%;
   background-repeat: no-repeat;
@@ -148,6 +155,7 @@
 }
 .uni-search-input {
   width: 100%;
+  min-height: 44px;
   background: var(--bg-card);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-md);
@@ -688,12 +696,26 @@
 
 
 /* ── Responsive — narrow viewports ── */
+@media (max-width: 767px) {
+  .uni-page-hero { background-attachment: scroll; }
+  .uni-page-hero::before {
+    background: linear-gradient(180deg,
+      rgba(13,13,15,0.62) 0%,
+      rgba(13,13,15,0.80) 55%,
+      var(--bg) 100%);
+  }
+}
+
 @media (max-width: 640px) {
   /* width:fit-content + items wider than viewport = horizontal scroll bug */
   .uni-tabs,
   .degree-switcher {
     width: 100%;
   }
+
+  .uni-tab { min-height: 44px; }
+  .uni-page-hero { padding-top: calc(var(--nav-h) + var(--space-8)); }
+  .uni-panel { padding: var(--space-8) 0; }
 
   .uni-tab,
   .deg-tab {
@@ -747,5 +769,69 @@ body[data-orb-intro].orb-intro #orb-wrap {
   .course-card:hover,
   .auto-card:hover {
     transform: none !important;
+  }
+}
+
+
+/* ── Touch devices: no sticky hover states (see components.css) ── */
+@media (hover: none) {
+  .course-card:hover,
+  .auto-card:hover,
+  .module-card:hover { transform: none; box-shadow: none; }
+  .screenshot-item:hover img { transform: none; }
+  .course-link:hover,
+  .auto-card-link:hover,
+  .back-link:hover { gap: inherit; }
+}
+
+/* ── Search: clear button ── */
+.uni-search-clear {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition), background-color var(--transition);
+}
+.uni-search-clear[hidden] { display: none; }   /* display:flex would beat [hidden] */
+.uni-search-clear svg { width: 13px; height: 13px; }
+.uni-search-clear:hover { color: var(--text); background: rgba(255, 255, 255, 0.07); }
+
+/* The native "x" of type=search would sit on top of ours */
+.uni-search-input::-webkit-search-decoration,
+.uni-search-input::-webkit-search-cancel-button,
+.uni-search-input::-webkit-search-results-button { -webkit-appearance: none; appearance: none; }
+
+@media (max-width: 640px) {
+  .uni-search { max-width: 100%; }
+
+  /* Three even columns instead of a flex row that wrapped 2 + 1 */
+  .uni-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  .uni-stat-num   { font-size: 1.5rem; }
+  .uni-stat-label { font-size: 0.6rem; letter-spacing: 0.03em; line-height: 1.3; }
+  /* The vertical rules have no room between three columns */
+  .uni-stat-sep { display: none; }
+}
+
+/* Narrow phones: the three tab labels + icons no longer fit side by side */
+@media (max-width: 420px) {
+  .uni-tab svg { display: none; }
+  .uni-tab {
+    padding: var(--space-3) var(--space-2);
+    font-size: 0.78rem;
+    letter-spacing: -0.02em;
   }
 }

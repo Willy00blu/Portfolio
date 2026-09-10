@@ -2,6 +2,9 @@
  * uni-data.js — University Hub: all static content
  * Edit this file to update courses, automations, and template modules.
  * No logic here — pure data only.
+ *
+ * Paths in this file are relative to pages/University.html (the only page
+ * that imports it), i.e. '../imgs/...'.
  */
 
 /* ── SVG snippets ─────────────────────────────────────────────────── */
@@ -140,8 +143,9 @@ export const AUTOMATIONS = [
   {
     title:    'noeqtion',
     icon:     null,
-    iconImg:  '../imgs/notion-logo.png',
-    iconAlt:  'Notion',
+    iconImg:      '../imgs/notion-logo.webp',
+    iconFallback: '../imgs/notion-logo.png',
+    iconAlt:      'Notion',
     barClass: 'bar-notion',
     desc:     'A browser extension for Firefox and Chrome that converts LaTeX equations into Notion native math blocks. Detects inline and block expressions, then automates the /math command via keyboard shortcut or popup button — solving the pain of pasting math-heavy notes into Notion.',
     tags:     ['JavaScript', 'Browser Extension', 'Notion', 'LaTeX'],
@@ -179,7 +183,7 @@ export const TEMPLATES = [
     title:   'Portfolio Website',
     desc:    'The source code of this portfolio — the one you\'re looking at right now. Feel free to fork it, adapt it, and make it yours.',
     cta:     'GitHub',
-    ctaUrl:  '#',
+    ctaUrl:  'https://github.com/Willy00blu/Portfolio',
     ctaType: 'github',
   },
 ];

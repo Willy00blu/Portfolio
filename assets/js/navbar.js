@@ -1,98 +1,113 @@
 /**
- * navbar.js — Sticky Nav, Active Section Highlight, Mobile Toggle
+ * navbar.js — sticky navbar, active-section highlight, mobile drawer
+ *
+ * The navbar is the one element that overlaps everything else, so its real
+ * rendered height is published back to CSS as --nav-h. Scroll offsets,
+ * scroll-margin and the mobile drawer's top edge all derive from that single
+ * value instead of a hard-coded 60/80px that drifts as soon as the logo or
+ * the font size changes.
  */
+'use strict';
 
-(function initNavbar() {
-  const navbar     = document.getElementById('navbar');
-  const navLinks   = document.querySelectorAll('.nav-link');
-  const navToggle  = document.querySelector('.nav-toggle');
-  const navMenu    = document.querySelector('.nav-links');
+PF.module('Navbar', function initNavbar() {
 
+  const navbar    = document.getElementById('navbar');
   if (!navbar) return;
 
-  /* ── Sticky class on scroll ── */
-  const scrollThreshold = 40;
+  const navLinks  = document.querySelectorAll('.nav-link');
+  const navToggle = document.querySelector('.nav-toggle');
+  const navMenu   = document.querySelector('.nav-links');
+  const root      = document.documentElement;
+
+  /* ── Publish the real navbar height to CSS ── */
+  function syncNavHeight() {
+    const h = Math.round(navbar.getBoundingClientRect().height);
+    if (h > 0) root.style.setProperty('--nav-h', h + 'px');
+  }
+  syncNavHeight();
+  window.addEventListener('resize', PF.debounce(syncNavHeight, 150), { passive: true });
+  window.addEventListener('load', syncNavHeight);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(syncNavHeight).catch(function () {});
+  }
+
+  /* ── Sticky style on scroll (rAF-throttled) ── */
+  const SCROLL_THRESHOLD = 40;
+  let scrollPending = false;
 
   function updateNavbarStyle() {
-    if (window.scrollY > scrollThreshold) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+    navbar.classList.toggle('scrolled', window.scrollY > SCROLL_THRESHOLD);
   }
 
-  window.addEventListener('scroll', updateNavbarStyle, { passive: true });
-  updateNavbarStyle(); // run once on load
+  window.addEventListener('scroll', function () {
+    if (scrollPending) return;
+    scrollPending = true;
+    requestAnimationFrame(function () {
+      scrollPending = false;
+      updateNavbarStyle();
+    });
+  }, { passive: true });
+  updateNavbarStyle();
 
-
-  /* ── Highlight active nav link ── */
+  /* ── Active link highlight ── */
   function setActiveLink(sectionId) {
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      if (href === '#' + sectionId) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
+    navLinks.forEach(function (link) {
+      const href = link.getAttribute('href') || '';
+      link.classList.toggle('active', href === '#' + sectionId);
     });
   }
 
-  // Listen for section change events from main.js
-  document.addEventListener('activeSection', (e) => {
+  document.addEventListener('activeSection', function (e) {
     setActiveLink(e.detail.id);
   });
-
-  // Set 'hero' active initially
   setActiveLink('hero');
 
+  /* ── Mobile drawer ── */
+  if (!navToggle || !navMenu) return;
 
-  /* ── Mobile menu toggle ── */
-  if (navToggle && navMenu) {
+  let isOpen = false;
 
-    function closeMenu() {
-      navMenu.classList.remove('open');
-      navToggle.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-
-    navToggle.addEventListener('click', () => {
-      const isOpen = navMenu.classList.toggle('open');
-      navToggle.classList.toggle('open', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen);
-      // Prevent body scroll when menu is open
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-
-    // Close on link click — return focus to toggle for keyboard users
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        closeMenu();
-        navToggle.focus();
-      });
-    });
-
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!navbar.contains(e.target) && navMenu.classList.contains('open')) {
-        closeMenu();
-      }
-    }, { passive: true });
-
-    // Close on Escape key — return focus to toggle for keyboard users
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navMenu.classList.contains('open')) {
-        closeMenu();
-        navToggle.focus();
-      }
-    }, { passive: true });
-
-    // Close on resize to desktop — prevents stuck overflow:hidden
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 767 && navMenu.classList.contains('open')) {
-        closeMenu();
-      }
-    }, { passive: true });
+  function setMenu(open) {
+    isOpen = open;
+    navMenu.classList.toggle('open', open);
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    /* A class, not an inline style: the loader also owns body.overflow and
+       inline styles would fight each other. */
+    document.body.classList.toggle('menu-open', open);
   }
 
-})();
+  function closeMenu(refocus) {
+    if (!isOpen) return;
+    setMenu(false);
+    if (refocus) navToggle.focus();
+  }
+
+  navToggle.addEventListener('click', function () { setMenu(!isOpen); });
+
+  /* Close after picking a destination — including cross-page links, where the
+     drawer would otherwise flash open again during the back-navigation. */
+  navLinks.forEach(function (link) {
+    link.addEventListener('click', function () { closeMenu(false); });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (isOpen && !navbar.contains(e.target)) closeMenu(false);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu(true);
+  });
+
+  /* Rotating a phone or resizing to desktop must not leave the page locked.
+     960 = the breakpoint where components.css swaps the drawer for the
+     horizontal navbar. */
+  const DRAWER_MAX = 959;
+  window.addEventListener('resize', PF.debounce(function () {
+    if (window.innerWidth > DRAWER_MAX) closeMenu(false);
+  }, 120), { passive: true });
+
+  /* Back/forward navigation restores the page from cache with the drawer open */
+  window.addEventListener('pageshow', function () { closeMenu(false); });
+
+});
