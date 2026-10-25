@@ -1,699 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-pagina="casa">
 <head>
-  <meta charset="UTF-8" />
-  <!-- Force scroll to top before any rendering — prevents browser scroll restoration -->
-  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="Guglielmo Rotunno — Computer Engineering Student at Politecnico di Milano. Passionate about technology and problem-solving." />
-  <meta name="author" content="Guglielmo Rotunno" />
-  <meta name="theme-color" content="#0d0d0f" />
-  <meta name="color-scheme" content="dark" />
-  <link rel="canonical" href="https://willy00blu.github.io/Portfolio/" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://willy00blu.github.io/Portfolio/" />
-  <meta property="og:title" content="Guglielmo Rotunno — Computer Engineering Student" />
-  <meta property="og:description" content="Computer Engineering Student at Politecnico di Milano. Passionate about technology and problem-solving." />
-  <meta property="og:image" content="https://willy00blu.github.io/Portfolio/imgs/hero-bg.webp" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="imgs/nav-avatar.webp" />
-
-  <title>Guglielmo Rotunno — Computer Engineering Student</title>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
-    rel="stylesheet"
-  />
-
-  <link rel="preload" as="image" href="imgs/hero-bg.webp" fetchpriority="high" />
-
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/animations.css" />
-  <link rel="stylesheet" href="assets/css/loader.css" />
-  <link rel="stylesheet" href="assets/css/orb.css" />
-
-  <!-- ── No-JS fallback ────────────────────────────────────────────────
-       Everything on this page is progressive enhancement except the intro
-       loader, which covers the screen and is dismissed by JS. Without JS
-       it must never be shown, and the reveal animations must not leave the
-       content invisible.                                              -->
-  <noscript>
-    <style>
-      #loader, #orb-wrap { display: none !important; }
-      .reveal, .reveal-left, .reveal-right, .reveal-scale {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-      .hero-eyebrow, .hero-name, .hero-role, .hero-cta,
-      .hero-uni-cta, .hero-socials, .hero-scroll-hint { opacity: 1 !important; }
-    </style>
-  </noscript>
-
-  <!-- ── Loader failsafe ───────────────────────────────────────────────
-       Independent of every other script: if loader.js fails to load or
-       throws, this still tears the splash screen down and unlocks
-       scrolling, so a visitor can never be left staring at it.        -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <base href="./">
+  <title>Guglielmo Rotunno</title>
+  <meta name="description" content="Computer Engineering at Politecnico di Milano: research, projects, experience and course notes.">
+  <meta property="og:title" content="Guglielmo Rotunno">
+  <meta property="og:description" content="Computer Engineering at Politecnico di Milano: research, projects, experience and course notes.">
+  <meta property="og:image" content="immagini/about-photo.webp">
+  <meta name="theme-color" content="#171717">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%20cx%3D%22.38%22%20cy%3D%22.32%22%20r%3D%22.8%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233a3a46%22%2F%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%230d0d12%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23050507%22%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2230%22%20fill%3D%22url(%23g)%22%2F%3E%3Crect%20x%3D%2221%22%20y%3D%2224%22%20width%3D%226%22%20height%3D%2215%22%20rx%3D%222%22%20fill%3D%22%2300e5ff%22%2F%3E%3Crect%20x%3D%2237%22%20y%3D%2224%22%20width%3D%226%22%20height%3D%2215%22%20rx%3D%222%22%20fill%3D%22%2300e5ff%22%2F%3E%3C%2Fsvg%3E">
+  <!-- nella pagina, non nel foglio di stile: valgono dal primo istante, prima che il foglio arrivi (su rete lenta il
+       foglio arriva dopo, e intanto si vedeva la casa, o l'italiano, o i passaggi tra le pagine fallivano) -->
+  <style>html.attesa body, html.attesa-intro body { visibility: hidden; } html.attesa-intro { background: #000; }
+    @view-transition { navigation: auto; } @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }</style>
   <script>
+    // (22/10) c'è JavaScript: gli strumenti, finché il loro codice arriva, dicono «Carico…» e non «serve JavaScript»
+    document.documentElement.classList.add("js");
+    // il tempo massimo delle attese qui sotto parte da quando la pagina è letta, non da adesso: su rete lenta la pagina
+    // si dipinge dopo qualche secondo e un timer partito subito toglieva l'attesa troppo presto
+    // e, finché il codice del sito è partito ma non ha ancora finito (su rete molto lenta scarica ancora dei pezzi),
+    // l'attesa si allunga, al massimo tre volte: è lui a toglierla quando è pronto
+    function dopoLettura(ms, f) {
+      var volte = 3, prova = function () { if (window.__avvioVivo && !window.__avvioFatto && volte-- > 0) setTimeout(prova, ms); else f(); };
+      if (document.readyState === "loading") addEventListener("DOMContentLoaded", function () { setTimeout(prova, ms); }); else setTimeout(prova, ms);
+    }
+    // chi ha scelto l'altra lingua non vede questa nemmeno per un attimo (e se qualcosa va storto, dopo un secondo e mezzo
+    // si vede comunque). Le pagine sono scritte in inglese
+    try { if (localStorage.getItem("giardino.lingua-2") === '"it"' || /[?&]lang=it/.test(location.search)) { document.documentElement.classList.add("attesa"); dopoLettura(1500, function () { document.documentElement.classList.remove("attesa"); }); } } catch (e) {}
+    // la casa alla prima visita e con #orientati: nera finché arriva l'accensione (si toglie in parti/intro.js, o dopo 3 secondi),
+    // così non si vede la casa per un attimo e poi il nero. Non nei collaudi automatici né con "riduci movimento", come l'intro
+    try { if (!/[?&]dentro/.test(location.search) && (location.hash === "#orientati" || (localStorage.getItem("giardino.intro") !== "true" && !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches))) { document.documentElement.classList.add("attesa-intro"); dopoLettura(3000, function () { document.documentElement.classList.remove("attesa-intro"); }); } } catch (e) {}
+    // i passaggi tra le pagine: se il browser ne salta uno (pagina nascosta, clic veloci) non è un errore
+    // arrivati in Università dal passaggio della stanza (19/10; prima era il blog): la pagina resta coperta finché arriva l'introduzione (src/parti/copertina-universita.js)
+    // e niente passaggio del browser tra le due pagine: la testata e il menu, che ci passano sopra con il loro nome,
+    // spunterebbero sopra la copertina per mezzo secondo
+    try { if (sessionStorage.getItem("giardino.passaggio-arrivo") === "true") { document.documentElement.classList.add("arrivo-universita"); setTimeout(function () { document.documentElement.classList.remove("arrivo-universita"); }, 2500); addEventListener("pagereveal", function (e) { if (e.viewTransition) e.viewTransition.skipTransition(); }, { once: true }); } } catch (e) {}
+    ["pageswap", "pagereveal"].forEach(function (t) { addEventListener(t, function (e) { var v = e.viewTransition; if (v) [v.ready, v.finished, v.updateCallbackDone].forEach(function (p) { p.catch(function () {}); }); }); });
+    addEventListener("unhandledrejection", function (e) { var m = e.reason && (e.reason.message || "") ; if (/Transition was (aborted|skipped)|ViewTransition/i.test(m)) e.preventDefault(); });
+    // il titolo della tessera o della scheda cliccata vola fino al titolo della pagina nuova (18/10, dal brainstorming):
+    // sulla pagina che si lascia gli si dà un nome, sulla nuova lo stesso nome va al titolo; il browser fa il resto
     (function () {
-      setTimeout(function () {
-        var l = document.getElementById('loader');
-        if (l && l.style.display !== 'none') {
-          l.style.display = 'none';
-          document.body.classList.remove('is-loading');
-          document.body.style.overflow = '';
-          document.body.classList.add('hero-ready');
-          document.dispatchEvent(new CustomEvent('loaderComplete'));
-        }
-      }, 8000);
+      var clic = null, segnato = null, NOME = "titolo-scelto";
+      addEventListener("click", function (e) { var a = e.target.closest && e.target.closest("a[href]"); clic = a && !a.closest("#vault, #testa, #fondo") ? a : null; }, true);
+      addEventListener("pageshow", function () { if (segnato) { segnato.style.viewTransitionName = ""; segnato = null; } });
+      addEventListener("pageswap", function (e) {
+        var a = clic, dove; clic = null;
+        if (segnato) { segnato.style.viewTransitionName = ""; segnato = null; }
+        if (!e.viewTransition || !a || !e.activation || !e.activation.entry) return;
+        dove = new URL(e.activation.entry.url);
+        if (dove.hash || a.href.split("#")[0] !== dove.href) return;
+        var t = a.querySelector(".etichetta, h2, h3, b"); if (!t) return;
+        t.style.viewTransitionName = NOME; segnato = t;
+        try { sessionStorage.setItem("giardino.volo", dove.pathname); } catch (x) {}
+      });
+      addEventListener("pagereveal", function (e) {
+        var via = null; try { via = sessionStorage.getItem("giardino.volo"); sessionStorage.removeItem("giardino.volo"); } catch (x) {}
+        if (!e.viewTransition || via !== location.pathname || document.documentElement.classList.contains("attesa")) return;
+        var h = document.querySelector("main h1.titolo"); if (!h) return;
+        h.style.viewTransitionName = NOME; document.documentElement.classList.add("titolo-volato");
+        e.viewTransition.finished.finally(function () { h.style.viewTransitionName = ""; });
+      });
     })();
   </script>
-
+  <!-- le pagine del sito si scaricano già quando il mouse si ferma su un link (non si avviano: niente prerender, che
+       accenderebbe la sfera e conterebbe visite mai fatte) -->
+  <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target], [download], [href*='#']"}}]},"eagerness":"moderate"}]}</script>
+  <!-- i caratteri stanno sul sito (stile/caratteri.css): si chiedono subito quelli del testo e dei titoli -->
+  <link rel="preload" href="caratteri/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="caratteri/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="pacchetto/stile.css?v=c897c2ff9b">
+  <script src="pacchetto/gsap.min.js?v=3.13.0" defer></script>
+  <script src="pacchetto/SplitText.min.js?v=3.13.0" defer></script>
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-JSSSXXJ5.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-GEPZDJWT.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-U2J7MODF.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-IAAWKSDH.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-2LAGWZQB.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-3SJ2VMBQ.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-624JL5NY.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-WZ4QVTL2.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-UCI7B3VG.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-HEHLIDPY.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-6K22NPLE.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-ALOIQHJJ.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-TZQM3TAZ.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-GPTLE6WR.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-43PVDGZO.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/casa-UISIP5TB.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-X567K7D7.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-NQSZDSSC.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-S4BDQQU6.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-GH5J75PD.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-2H4B66BK.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-3JEUUHPU.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-V6CTYFSY.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/chunk-GXAC7VYJ.js">
+  <link rel="modulepreload" href="pacchetto/pezzi/intro-RGZHQNKL.js">
+  <script type="module" src="pacchetto/avvio.js?v=c897c2ff9b"></script>
 </head>
-
-<body>
-
-  <a href="#hero" class="skip-link">Skip to content</a>
-
-  <!-- ════════════════════════════════════════════════════════
-       NAVBAR
-  ════════════════════════════════════════════════════════ -->
-  <nav id="navbar" role="navigation" aria-label="Main navigation">
-    <div class="nav-inner">
-
-      <a href="#hero" class="nav-logo" aria-label="Guglielmo Rotunno — home">
-        <div class="nav-logo-avatar">
-          <img src="imgs/nav-avatar.webp" data-fallback="imgs/Gemini_Generated_Image_iuctr9iuctr9iuct (1).png" alt="" width="36" height="36" />
-        </div>
-        <span>Guglielmo Rotunno</span>
-      </a>
-
-      <button
-        class="nav-toggle"
-        aria-label="Toggle navigation menu"
-        aria-expanded="false"
-        aria-controls="nav-menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <ul class="nav-links" id="nav-menu" role="list">
-        <li>
-          <a class="nav-link" href="#hero">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            Home
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#about">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-            About
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#education">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-            Education
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#experiences">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-2V4c0-1.1-.9-2-2-2h-8C6.9 2 6 2.9 6 4v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10-2h4v2h-4V4zM20 19H4V8h16v11z"/></svg>
-            Experiences
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#projects">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            Projects
-          </a>
-        </li>
-        <li>
-          <a class="nav-link nav-link-uni" href="pages/University.html">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-            University
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#contacts">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Contacts
-          </a>
-        </li>
-      </ul>
-
-    </div>
-  </nav>
-
-
-  <main>
-
-    <!-- ════════════════════════════════════════════════════════
-         HERO
-    ════════════════════════════════════════════════════════ -->
-    <section id="hero" aria-label="Introduction">
-
-      <div class="container">
-        <div class="hero-content">
-          <span class="hero-name">Guglielmo Rotunno</span>
-
-          <p class="hero-role">
-            <strong>Student</strong> at <strong>Politecnico di Milano</strong> —
-            <span id="typing-text">Computer Engineering Student</span>
-          </p>
-
-          <div class="hero-cta">
-            <a href="#projects" class="btn btn-primary">
-              View Projects
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <a href="#contacts" class="btn btn-outline">Get in touch</a>
-          </div>
-
-          <div class="hero-uni-cta">
-            <a href="pages/University.html" class="btn btn-uni-hub">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-              University Hub — Notes &amp; Resources
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-
-          <div class="hero-socials" aria-label="Social links">
-            <a href="https://github.com/Willy00blu" class="hero-social-btn" target="_blank" rel="noopener" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/in/guglielmo-rotunno-b90b60311/" class="hero-social-btn" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-            <a href="mailto:guglielmorotunno05@gmail.com" class="hero-social-btn" aria-label="Email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </a>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="hero-scroll-hint" aria-hidden="true">
-        <div class="scroll-line"></div>
-        Scroll
-      </div>
-
-    </section>
-
-
-    <!-- ════════════════════════════════════════════════════════
-         ABOUT
-    ════════════════════════════════════════════════════════ -->
-    <section id="about" aria-labelledby="about-title">
-      <div class="container">
-
-        <h2 id="about-title" class="section-title reveal">About me</h2>
-
-        <div class="about-wrap">
-        <div class="about-grid">
-
-          <!-- Bio column -->
-          <div class="about-bio">
-
-            <div class="reveal" data-delay="1">
-              <p>
-                I'm Guglielmo, a Computer Engineering student at
-                <strong style="color: var(--text);">Politecnico di Milano</strong>.
-                I'm drawn to the places where mathematics, computation, and physical
-                reality converge, the kind of problems that need both rigorous
-                modelling and efficient code to solve.
-              </p>
-              <p>
-                Right now I'm contributing to
-                <strong style="color: var(--text);">MARCS</strong>, a research project
-                that fuses AIS data with SAR and optical satellite imagery to detect
-                vessels that go deliberately dark at sea.
-                I also take part in the Polimi Data Scientists
-                student association as a web contributor.
-              </p>
-              <p>
-                Outside of coursework I spend a lot of time coding for fun : building
-                tools, exploring ideas, and occasionally optimising something that
-                didn't really need it,
-                <a href="#projects" style="color: var(--accent);">you can have a look in my projects section</a>.
-                I also keep a running archive of notes,
-                automations, and everything about how I organise my university life,
-                 all collected in the
-                <a href="pages/University.html" style="color: var(--accent);">University hub</a>.
-              </p>
-              <p>
-                Non-tech side: music production, guitar, piano, chess,
-                and the occasional deep dive into philosophy or personal finance.
-              </p>
-            </div>
-
-          </div>
-
-          <!-- Avatar column -->
-          <div class="about-avatar-wrap reveal" data-delay="2">
-            <div class="avatar-ring" aria-hidden="true">
-              <img
-                src="imgs/about-photo.webp"
-                data-fallback="imgs/foto_con_sorriso_linkedin.png"
-                alt="Guglielmo Rotunno"
-                class="avatar-img"
-                width="700" height="664"
-                loading="lazy" decoding="async"
-              />
-            </div>
-          </div>
-
-        </div><!-- /about-grid -->
-        </div><!-- /about-wrap -->
-      </div>
-    </section>
-
-
-    <!-- ════════════════════════════════════════════════════════
-         EDUCATION
-    ════════════════════════════════════════════════════════ -->
-    <section id="education" aria-labelledby="edu-title">
-      <div class="container">
-
-        <h2 id="edu-title" class="section-title reveal">Education</h2>
-
-        <div class="edu-card reveal">
-          <div>
-            <div class="uni-teaser-badge">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-              Academic record
-            </div>
-            <p class="edu-university">Politecnico di Milano</p>
-            <h3 class="edu-degree">BSc Computer Engineering</h3>
-            <p class="edu-period">Sep. 2024 — Jul. 2027 · Milan, Italy</p>
-            <p class="edu-thesis">
-              <strong>Relevant courses:</strong> Fondamenti di Informatica, Architettura dei Calcolatori
-              e Sistemi Operativi, Analisi Matematica 1, Algebra Lineare, Fisica,
-              Logica e Algebra, Comunicazioni e Internet, Elettrotecnica.
-            </p>
-            <a href="pages/University.html" class="btn btn-outline" style="margin-top:var(--space-6);display:inline-flex;">
-              University hub
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-          <div class="edu-logo-placeholder" aria-label="Politecnico di Milano logo">
-            <img src="imgs/edu-polimi.webp" data-fallback="imgs/edu-polimi.png" alt="Politecnico di Milano" width="72" height="72" decoding="async" class="edu-logo-img" />
-          </div>
-        </div>
-
-        <div class="edu-card reveal" style="margin-top: var(--space-8);">
-          <div>
-            <div class="uni-teaser-badge">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-              Academic record
-            </div>
-            <p class="edu-university">Liceo G. Ricci Curbastro</p>
-            <h3 class="edu-degree">Scientific High School Diploma</h3>
-            <p class="edu-period">Sep. 2019 — Jul. 2024 · Lugo, Italy</p>
-            <p class="edu-thesis">
-              <strong>Final grade</strong> 85 / 100 &nbsp;
-            </p>
-          </div>
-          <div class="edu-logo-placeholder" aria-label="Liceo Ricci Curbastro logo">
-            <img src="imgs/edu-liceo.webp" data-fallback="imgs/edu-liceo.png" alt="Liceo G. Ricci Curbastro" width="72" height="72" decoding="async" class="edu-logo-img edu-logo-img--dim" />
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════════════════════
-         EXPERIENCES
-    ════════════════════════════════════════════════════════ -->
-    <section id="experiences" aria-labelledby="experiences-title">
-      <div class="container">
-
-        <h2 id="experiences-title" class="section-title reveal">Experiences</h2>
-
-        <div class="timeline" aria-label="Experiences timeline">
-
-          <!-- ── Polimi Data Science Community ── -->
-          <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-polimi-data-scientists.webp" data-fallback="imgs/logo-polimi-data-scientists.jpeg" alt="Polimi Data Scientists" width="64" height="64" decoding="async" /></div>
-
-            <div class="timeline-content">
-              <div class="timeline-meta">
-                <span class="timeline-company">Polimi Data Scientists</span>
-                <time class="timeline-period" datetime="2025-10">Oct. 2025 — Present</time>
-                <span class="badge" style="margin-left:auto;font-size:0.68rem;color:var(--sage);background:rgba(74,222,128,0.07);border-color:rgba(74,222,128,0.25);">Current</span>
-              </div>
-
-              <h3 class="timeline-role">Web Student Association</h3>
-
-              <p class="timeline-desc">
-                Contributor to the official website of the Polimi Data Scientists,
-                a student community at Politecnico di Milano focused on data science and AI.
-              </p>
-
-              <div class="project-stack">
-                <span class="stack-tag">HTML</span>
-                <span class="stack-tag">CSS</span>
-                <span class="stack-tag">JavaScript</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- ── Data Science Summer School ── -->
-          <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-gsmo-polimi.webp" data-fallback="imgs/logo-gsmo-polimi.jpeg" alt="GSOM Polimi" width="64" height="64" decoding="async" /></div>
-
-            <div class="timeline-content">
-              <div class="timeline-meta">
-                <span class="timeline-company">GSOM POLIMI</span>
-                <time class="timeline-period" datetime="2025-07">Jul. 2025</time>
-                <span class="badge" style="margin-left:auto;font-size:0.68rem;">Summer School</span>
-              </div>
-
-              <h3 class="timeline-role">Data Science &amp; AI for Business</h3>
-
-              <p class="timeline-desc">
-                Intensive program on data analysis and applied AI for strategic business
-                decision-making, including lectures, workshops, and company visits.
-              </p>
-
-              <div class="project-stack">
-                <span class="stack-tag">Data Analysis</span>
-                <span class="stack-tag">Applied AI</span>
-                <span class="stack-tag">Business Strategy</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- ── Kaplan Dublin ── -->
-          <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-kaplan.webp" data-fallback="imgs/logo-kaplan.jpg" alt="Kaplan International Languages" width="64" height="64" decoding="async" /></div>
-
-            <div class="timeline-content">
-              <div class="timeline-meta">
-                <span class="timeline-company">Kaplan International Languages — Dublin, Ireland</span>
-                <time class="timeline-period" datetime="2023-07">Jul. 2023</time>
-                <span class="badge" style="margin-left:auto;font-size:0.68rem;">Language Course</span>
-              </div>
-
-              <h3 class="timeline-role">Intensive English Program Abroad</h3>
-
-              <p class="timeline-desc">
-                Intensive summer English language program abroad (15–29 Jul. 2023).
-              </p>
-            </div>
-          </article>
-
-          <!-- ── Kaplan Cambridge ── -->
-          <article class="timeline-item reveal">
-            <div class="timeline-dot" aria-hidden="true"><img src="imgs/logo-kaplan.webp" data-fallback="imgs/logo-kaplan.jpg" alt="Kaplan International Languages" width="64" height="64" decoding="async" /></div>
-
-            <div class="timeline-content">
-              <div class="timeline-meta">
-                <span class="timeline-company">Kaplan International Languages — Cambridge, UK</span>
-                <time class="timeline-period" datetime="2022-07">Jul. 2022</time>
-                <span class="badge" style="margin-left:auto;font-size:0.68rem;">Language Course</span>
-              </div>
-
-              <h3 class="timeline-role">Intensive English Program Abroad</h3>
-
-              <p class="timeline-desc">
-                Intensive summer English language program abroad (18–29 Jul. 2022).
-              </p>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-
-
-
-    <!-- ════════════════════════════════════════════════════════
-         PROJECTS
-    ════════════════════════════════════════════════════════ -->
-    <section id="projects" aria-labelledby="projects-title">
-      <div class="container">
-
-        <h2 id="projects-title" class="section-title reveal">Projects</h2>
-
-        <div class="projects-grid" aria-label="Project gallery">
-
-          <!-- 1 — MARCS (featured) -->
-          <article class="project-card featured">
-            <div class="project-img-wrap" style="position:relative;">
-              <img src="imgs/proj-marcs.webp" data-fallback="imgs/proj-marcs.png" alt="MARCS"
-                   width="900" height="506" loading="lazy" decoding="async" />
-              <div class="uni-teaser-badge" style="position:absolute;top:var(--space-3);left:var(--space-3);color:#fff;background:rgba(0,0,0,0.55);border-color:rgba(255,255,255,0.2);backdrop-filter:blur(6px);">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2" stroke-linecap="round"/></svg>
-                In development
-              </div>
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">MARCS</h3>
-              <p class="project-desc">
-                Maritime Activity Recognition &amp; Correlation System (MARCS). A multi-modal framework detecting "dark vessels", ships disabling AIS transponders to evade tracking, via AIS-gap analysis fused with SAR and optical satellite imagery. Developed within the PoliMi Data Scientists research group.
-              </p>
-              <div class="project-links">
-                <a href="https://drive.google.com/file/d/1iBNc3unOhOYDK8I0FbyDhoO42JVTv2Rg/view?usp=sharing" class="project-link" target="_blank" rel="noopener" aria-label="Project documentation">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Docs
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- 2 — Monte Carlo Poker Simulator -->
-          <article class="project-card">
-            <div class="project-img-wrap">
-              <img src="imgs/proj-poker.webp" data-fallback="imgs/proj-poker.png" alt="Monte Carlo Poker Simulator"
-                   width="900" height="506" loading="lazy" decoding="async" />
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Monte Carlo Poker Simulator</h3>
-              <p class="project-desc">
-                A Python poker suite powered by a high-performance C Monte Carlo simulator. Leveraging the law of large numbers through massive random sampling, it calculates precise equity against complex ranges, accurately accounting for blockers and combo frequencies.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/Willy00blu/poker-suite-pro" class="project-link" target="_blank" rel="noopener" aria-label="GitHub">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- 3 — Diet Maker -->
-          <article class="project-card">
-            <div class="project-img-wrap">
-              <img src="imgs/proj-diet.webp" data-fallback="imgs/proj-diet.png" alt="Diet Maker"
-                   width="900" height="506" loading="lazy" decoding="async" />
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Diet Maker</h3>
-              <p class="project-desc">
-                A constraint-based meal planning engine that generates personalized weekly diet plans by solving Mixed Integer Linear Programming problems with 1900+ decision variables. Combines nutritional science, chrono-nutrition principles, and user preferences into a fully configurable MILP pipeline, built on PuLP/CBC with a Streamlit interface and a 33-scenario automated test suite.
-              </p>
-              <div class="project-links">
-                <a href="https://dietmaker-gsdlqnfz4rb4dcuq4fzftx.streamlit.app/" class="btn btn-primary" target="_blank" rel="noopener" style="font-size:0.82rem;padding:0.45rem 1rem;gap:var(--space-2);display:inline-flex;align-items:center;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke-linecap="round"/></svg>
-                  Live App
-                </a>
-                <a href="https://github.com/Willy00blu/Diet_Maker" class="project-link" target="_blank" rel="noopener" aria-label="GitHub">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- 4 — English Vocabulary Quiz -->
-          <article class="project-card">
-            <div class="project-img-wrap">
-              <img src="imgs/proj-vocab.webp" data-fallback="imgs/proj-vocab.png" alt="Vocab Quiz"
-                   width="900" height="506" loading="lazy" decoding="async" />
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Vocab Quiz</h3>
-              <p class="project-desc">
-                A personal desktop quiz tool for drilling English vocabulary — type the
-                translation, track what you keep getting wrong, review only your mistakes. Built
-                to actually help me prepare for the IELTS.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/Willy00blu/vocaboli-inglese" target="_blank" rel="noopener" class="project-link" aria-label="GitHub">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- 5 — Vinted Tracker -->
-          <article class="project-card">
-            <div class="project-img-wrap">
-              <img src="imgs/project-vinted-monitor.webp" data-fallback="imgs/project-vinted-monitor.png" alt="Vinted Tracker"
-                   width="900" height="506" loading="lazy" decoding="async" />
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Vinted Tracker</h3>
-              <p class="project-desc">
-                A desktop app that automatically monitors Vinted, Europe's largest
-                second-hand marketplace, across multiple countries and sends an instant email
-                alert the moment a new listing matches your search criteria: price range,
-                keywords, and brand filters included.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/Willy00blu/vinted-tracker" class="project-link" target="_blank" rel="noopener" aria-label="GitHub">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-
-          <!-- 7 — Physics Simulation -->
-          <article class="project-card">
-            <div class="project-img-wrap">
-              <img src="imgs/proj-physics.webp" data-fallback="imgs/proj-physics.png" alt="Physics Simulation"
-                   width="900" height="506" loading="lazy" decoding="async" />
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Physics Simulation</h3>
-              <p class="project-desc">
-                Four collision models, one clean interface. Elastic, inelastic, real-world
-                impacts and explosions, each with configurable mass, velocity and shape. An
-                experiment in turning physics formulas into something you can actually watch happen.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/Willy00blu/Physics_simulator" target="_blank" rel="noopener" class="project-link" aria-label="GitHub">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ════════════════════════════════════════════════════════
-         CONTACTS
-    ════════════════════════════════════════════════════════ -->
-    <section id="contacts" aria-labelledby="contacts-title">
-      <div class="container">
-
-        <h2 id="contacts-title" class="section-title reveal">Contacts</h2>
-
-        <div class="contacts-grid">
-          <div class="social-links reveal" data-delay="1" aria-label="Social profiles">
-
-            <a href="https://github.com/Willy00blu" class="social-link" target="_blank" rel="noopener" title="GitHub">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            </a>
-
-            <a href="https://www.linkedin.com/in/guglielmo-rotunno-b90b60311/" class="social-link" target="_blank" rel="noopener" title="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-
-            <a href="mailto:guglielmorotunno05@gmail.com" class="social-link" title="Email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-
-            <a href="https://www.instagram.com/_willy00___/" class="social-link" target="_blank" rel="noopener" title="Instagram">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            </a>
-
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-
-  <!-- ════════════════════════════════════════════════════════
-       FOOTER
-  ════════════════════════════════════════════════════════ -->
-  <footer>
-    <div class="footer-inner">
-      <p class="footer-copy" style="text-align:center;width:100%;">
-        &copy; <span id="footer-year">2026</span> <span class="footer-name">Guglielmo Rotunno</span>
-      </p>
-    </div>
-  </footer>
-
-  <!-- ── Loading screen ──────────────────────────────────────── -->
-  <div id="loader" role="status" aria-label="Loading portfolio">
-    <div class="loader-orb-wrap">
-      <div class="loader-ring"></div>
-      <div class="loader-ring"></div>
-      <div class="loader-ring"></div>
-      <div class="loader-orb">
-        <span class="loader-eye loader-eye-l"></span>
-        <span class="loader-eye loader-eye-r"></span>
-      </div>
-    </div>
-    <div class="loader-text">
-      <span class="loader-name">Guglielmo Rotunno</span>
-      <span class="loader-role">Computer Engineering Student</span>
-    </div>
-    <div class="loader-bar-wrap">
-      <div class="loader-bar"></div>
-    </div>
-    <p class="loader-status"></p>
-  </div>
-
-  <!-- ── Orb assistant ───────────────────────────────────────── -->
-  <div id="orb-wrap" aria-live="polite" aria-label="Portfolio assistant">
-    <div class="orb-bubble" id="orb-bubble" role="tooltip">
-      <button class="orb-close" id="orb-close" aria-label="Close assistant">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-      <span class="orb-section" aria-hidden="true"></span>
-      <p class="orb-text" id="orb-text"></p>
-    </div>
-    <button id="orb-hit" aria-label="Assistente portfolio — clicca per aprire o chiudere"></button>
-  </div>
-
-  <!-- utils.js defines window.PF and must stay first.
-       GSAP is optional: orb.js falls back to its own tween if it fails. -->
-  <script src="assets/js/utils.js"></script>
-  <script src="assets/js/loader.js"></script>
-  <script src="assets/js/navbar.js"></script>
-  <script src="assets/js/animations.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous"></script>
-  <script defer src="assets/js/orb-scene.js"></script>
-  <script defer src="assets/js/orb.js"></script>
-  <script>
-    (function () {
-      var y = document.getElementById('footer-year');
-      if (y) y.textContent = new Date().getFullYear();
-    })();
-  </script>
-
+<body class="pagina-casa con-vault">
+  <a class="salta" href="#pagina">Skip to content</a>
+  <aside class="vault" id="vault" aria-label="The site's folders"><div class="vault-nastro"><button type="button" class="vault-icona" data-vault-pannello title="Folders" aria-label="Open or close the folders" aria-controls="vault-albero" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h6l2 2h10v10H3z"/></svg><span class="vi-nome">Close</span></button><button type="button" class="vault-icona" data-cerca title="Search" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><span class="vi-nome">Search</span></button><button type="button" class="vault-icona" data-grafo aria-pressed="false" title="The site graph (⌘G)" aria-label="The site graph"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="7" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="17" r="2"/><path d="M7.7 8l3.2 7.3M16.6 7.4l-3.5 8M8 7h8"/></svg><span class="vi-nome">Graph</span></button><a class="vault-icona" href="./#orientati" title="Get oriented" aria-label="Get oriented"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span class="vi-nome">Get oriented</span></a></div><div class="vault-pannello"><div class="vault-testa"><span>Guglielmo Rotunno</span></div><nav class="vault-albero" id="vault-albero" aria-label="The site's pages"><ul><li><a class="vault-file qui" href="./" aria-current="page">Home</a></li><li><a class="vault-file" href="mappa/">site_map</a></li><li><details class="vault-cartella" data-c="chi" style="--c:var(--accento)"><summary><i class="vault-pallino"></i>About_me</summary><ul><li><a class="vault-file" href="chi-sono/">About_me</a></li><li><a class="vault-file" href="cv/">CV</a></li></ul></details></li><li><details class="vault-cartella" data-c="esperienze" style="--c:var(--lilla)"><summary><i class="vault-pallino"></i>Experience</summary><ul><li><a class="vault-file" href="esperienze/">home_experience</a></li><li><details class="vault-cartella" data-c="esp-lavoro"><summary>Work</summary><ul><li><a class="vault-file" href="esperienze/smc/">SMC</a></li></ul></details></li><li><details class="vault-cartella" data-c="esp-associazioni"><summary>Student_groups</summary><ul><li><a class="vault-file" href="esperienze/pmds/">PoliMi_Data_Scientists</a></li><li><a class="vault-file" href="esperienze/ltf/">LeadTheFuture</a></li></ul></details></li><li><details class="vault-cartella" data-c="esp-corsi"><summary>Courses</summary><ul><li><a class="vault-file" href="esperienze/summer/">Summer_School_Data_Science_&amp;_AI_for_Business</a></li></ul></details></li></ul></details></li><li><details class="vault-cartella" data-c="progetti" style="--c:var(--muschio)"><summary><i class="vault-pallino"></i>Projects_and_research</summary><ul><li><a class="vault-file" href="progetti/">home_projects</a></li><li><details class="vault-cartella" data-c="ricerca"><summary>Research</summary><ul><li><a class="vault-file" href="progetti/federated-learning/">Federated_learning</a></li></ul></details></li><li><details class="vault-cartella" data-c="progetti-veri"><summary>Projects</summary><ul><li><a class="vault-file" href="progetti/marcs/">MARCS</a></li><li><a class="vault-file" href="progetti/fisioterapia/">Clinical_Risk_Detector_for_Physiotherapy</a></li></ul></details></li><li><details class="vault-cartella" data-c="hackathon"><summary>Hackathons</summary><ul><li><a class="vault-file" href="progetti/safenet/">SafeNet</a></li></ul></details></li><li><details class="vault-cartella" data-c="esplorazioni"><summary>Personal_explorations</summary><ul><li><a class="vault-file" href="progetti/axioma/">Axioma</a></li><li><a class="vault-file" href="progetti/vinted-tracker/">Vinted_Tracker</a></li><li><a class="vault-file" href="progetti/equity/">Equity</a></li><li><a class="vault-file" href="progetti/physics-simulation/">Physics_Simulation</a></li><li><a class="vault-file" href="progetti/pipeline-trascrizioni/">Lecture_transcriber</a></li><li><a class="vault-file" href="progetti/scacchiera-robotica/">Robotic_chessboard</a></li></ul></details></li></ul></details></li><li><details class="vault-cartella" data-c="universita" style="--c:var(--senape)"><summary><i class="vault-pallino"></i>University_notes_and_tools</summary><ul><li><a class="vault-file" href="appunti/">Course_notes</a></li><li><details class="vault-cartella" data-c="ielts"><summary>IELTS</summary><ul><li><a class="vault-file" href="appunti/inglese/lezioni/">IELTS_the_lessons_with_my_tutor</a></li><li><a class="vault-file" href="appunti/inglese/schede/">IELTS_the_Writing_sheets</a></li></ul></details></li><li><a class="vault-file" href="programmi/">Recommended_apps</a></li><li><a class="vault-file" href="porte-aperte/">Open_doors</a></li></ul></details></li></ul></nav></div></aside>
+  <header class="testa in-casa" id="testa"><button type="button" class="testa-cartelle" data-vault-apri aria-controls="vault-albero" aria-expanded="false" aria-label="The site's folders"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h6l2 2h10v10H3z"/></svg></button><div class="testa-strumenti"><a class="tasto-cerca tasto-orientati" href="./#orientati"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span>Get oriented</span></a><button type="button" class="tasto-cerca" data-cerca><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>Search</span><kbd>⌘K</kbd></button><div class="lingua" role="group" aria-label="Lingua · Language"><span class="lingua-pillola" aria-hidden="true"></span><button type="button" data-l="en" lang="en" aria-pressed="true">EN</button><button type="button" data-l="it" lang="it" aria-pressed="false">IT</button></div></div></header>
+  <main id="pagina"><h1 class="nascosto">Guglielmo Rotunno</h1><div class="casa" data-casa><div class="macchia" data-macchia style="--cols:20;--rows:13"><div class="rq" data-id="chiedi" style="--gc:7 / span 8;--gr:6 / span 5;--sc:2;--sr:3;--o:0" data-dist="1.00"><div class="rq-dentro chiedi"><div class="chiedi-testa"><div class="posto-sfera" aria-hidden="true"></div><p class="chiedi-dice" data-dice>Hi! Ask me about the site, or open a tile.</p></div><form class="campo" data-campo><input type="text" name="q" maxlength="300" placeholder="Ask me something…" autocomplete="off" aria-label="Your question"><button type="submit" aria-label="Ask">→</button></form><div class="chiedi-pronte"><button type="button" data-pronta="ricerca" data-q="What&#39;s your research?">Research</button><button type="button" data-pronta="lavoro" data-q="Where do you work?">Work</button><button type="button" data-pronta="cv" data-q="Show me the CV">CV</button><button type="button" data-pronta="progetti" data-q="What projects have you done?">Projects</button></div><p class="chiedi-aiuto">I answer with the site's pages, no AI · <kbd>⌘K</kbd> searches the whole site</p></div></div><div class="rq" data-id="nome" data-parte="chi" style="--gc:7 / span 8;--gr:3 / span 3;--sc:2;--sr:2;--o:1;--tinta:var(--accento)" data-dist="3.00"><div class="rq-dentro nome"><h1>Guglielmo Rotunno</h1><p class="nome-corso" data-corto><span class="et-lungo">Computer Engineering · Politecnico di Milano</span><span class="et-corto">Computer Engineering · PoliMi</span></p><p class="ora" data-corto><span class="et-lungo">Now: research at NECSTLab · consultant at SMC</span><span class="et-corto">Now: research at NECSTLab · SMC</span></p><div class="pillole"><a href="cv/">CV</a></div></div></div><div class="rq" data-id="esperienze" data-parte="esperienze" style="--gc:1 / span 6;--gr:5 / span 6;--sc:2;--sr:3;--o:4;--tinta:var(--lilla)" data-dist="4.69"><a class="rq-dentro anteprima" href="esperienze/"><div class="ant-vetro" inert aria-hidden="true"><div class="ant-pagina" data-ant="esperienze" style="--base:760px"></div></div><span class="rq-sussurro">Work, student groups and courses.</span><span class="etichetta" data-corto><span class="et-lungo">Experience</span><span class="et-corto">Experience</span><i class="freccia">→</i></span></a></div><div class="rq" data-id="progetti" data-parte="progetti" style="--gc:15 / span 6;--gr:5 / span 6;--sc:2;--sr:3;--o:5;--tinta:var(--muschio)" data-dist="4.69"><a class="rq-dentro anteprima" href="progetti/"><div class="ant-vetro" inert aria-hidden="true"><div class="ant-pagina" data-ant="progetti" style="--base:760px"></div></div><span class="rq-sussurro">Academic research, team projects and personal explorations.</span><span class="etichetta" data-corto><span class="et-lungo">Projects and research</span><span class="et-corto">Projects</span><i class="freccia">→</i></span></a></div><div class="rq" data-id="contatti" data-parte="chi" style="--gc:9 / span 4;--gr:11 / span 2;--sc:1;--sr:1;--o:3;--tinta:var(--accento)" data-dist="4.50"><button type="button" class="rq-dentro piccolo" data-copia="guglielmorotunno05@gmail.com"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 6.5l8 6 8-6"/></svg><span class="piccolo-testo"><b>Contact</b><small class="rq-azione">copy the email</small></span></button></div><div class="rq" data-id="universita" data-parte="universita" style="--gc:1 / span 8;--gr:11 / span 3;--sc:2;--sr:2;--o:6;--tinta:var(--senape)" data-dist="6.40"><a class="rq-dentro anteprima" href="appunti/"><div class="ant-vetro" inert aria-hidden="true"><div class="ant-pagina" data-ant="universita" style="--base:760px"></div></div><span class="rq-sussurro">Course notes, apps for studying and opportunities for students.</span><span class="etichetta" data-corto><span class="et-lungo">University, notes and tools</span><span class="et-corto">University</span><i class="freccia">→</i></span></a></div><div class="rq" data-id="mappa" style="--gc:13 / span 6;--gr:11 / span 3;--sc:2;--sr:2;--o:7" data-dist="6.01"><a class="rq-dentro mappa-mini" href="mappa/"><img src="mappa/anteprima.svg" alt="" loading="lazy"><span class="etichetta"><span class="et-lungo">Map</span><i class="freccia">→</i></span></a></div><div class="rq" data-id="foto" data-parte="chi" style="--gc:1 / span 6;--gr:1 / span 4;--sc:2;--sr:2;--o:2;--tinta:var(--accento)" data-dist="6.48"><a class="rq-dentro foto" href="chi-sono/"><img decoding="async" src="immagini/about-photo.webp" alt="Guglielmo Rotunno"><span class="etichetta"><span class="et-lungo">About me</span><i class="freccia">→</i></span></a></div><div class="rq tondo" data-id="github" data-parte="chi" style="--gc:15 / span 2;--gr:3 / span 2;--sc:1;--sr:1;--o:8;--tinta:var(--accento)" data-dist="4.83"><a class="rq-dentro cerchio" href="https://github.com/Willy00blu" target="_blank" rel="noopener" aria-label="GitHub"><span class="logo" title="GitHub"><span class="maschera" style="-webkit-mask-image:url(immagini/icone/simple-icons/github.svg);mask-image:url(immagini/icone/simple-icons/github.svg);--c:#f2f2f2"></span></span><span class="cerchio-nome">GitHub ↗</span></a></div><div class="rq tondo" data-id="linkedin" data-parte="chi" style="--gc:17 / span 2;--gr:3 / span 2;--sc:1;--sr:1;--o:9;--tinta:var(--accento)" data-dist="5.83"><a class="rq-dentro cerchio" href="https://www.linkedin.com/in/guglielmo-rotunno-b90b60311/" target="_blank" rel="noopener" aria-label="LinkedIn"><span class="logo" title="LinkedIn"><img src="immagini/icone/devicon/linkedin/linkedin-original.svg" alt="" loading="lazy"></span><span class="cerchio-nome">LinkedIn ↗</span></a></div><div class="rq tondo" data-id="caso" style="--gc:7 / span 2;--gr:1 / span 2;--sc:1;--sr:1;--o:10" data-dist="5.85"><button type="button" class="rq-dentro cerchio" data-a-caso aria-label="A random question"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.2" fill="currentColor"/><circle cx="15" cy="15" r="1.2" fill="currentColor"/><circle cx="15" cy="9" r="1.2" fill="currentColor"/><circle cx="9" cy="15" r="1.2" fill="currentColor"/></svg><span class="cerchio-nome">Random</span></button></div></div><div class="casa-piede"><button type="button" class="link casa-ordine" data-ordine hidden>Tidy up</button></div></div></main>
+  <div id="fondo"><footer class="piede" id="piede"><div class="piede-link"><button type="button" data-copia="guglielmorotunno05@gmail.com">guglielmorotunno05@gmail.com</button><a class="" href="https://github.com/Willy00blu" target="_blank" rel="noopener">GitHub <i class="freccia">↗</i></a><a class="" href="https://www.linkedin.com/in/guglielmo-rotunno-b90b60311/" target="_blank" rel="noopener">LinkedIn <i class="freccia">↗</i></a></div></footer></div>
+  <noscript><p class="senza-js">The scenes, the sphere and search need JavaScript; everything else can be read without it.</p></noscript>
 </body>
 </html>
